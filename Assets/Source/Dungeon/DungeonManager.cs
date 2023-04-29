@@ -11,6 +11,8 @@ public class DungeonManager : MonoBehaviour, IManager
      */
 
     public DungeonGUI GUI;
+    public MapTile[,] map;  // [,] initializes a 2D array
+    public int mapSize;
 
     void Start()
     {
@@ -39,6 +41,16 @@ public class DungeonManager : MonoBehaviour, IManager
     void GenerateDungeon(GameState gs, DungeonFloor f)
     {
         // TODO: dungeon generation here
+        map = new MapTile[mapSize, mapSize];  // 3x3 for PoC build
+        
+        for (int i = 0; i < mapSize; i++){            
+            for (int j = 0; j < mapSize; j++){
+                MapTile tile = new MapTile();  // new tile for map
+                tile.isGround = true;          // instantiate as ground
+                map[i,j] = tile; 
+            }
+        }
+
 
         // Tell the GameState to generate us.
         gs.RequestManager(this);
