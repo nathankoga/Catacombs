@@ -11,6 +11,7 @@ public class DungeonManager : MonoBehaviour, IManager
      */
 
     public DungeonGUI GUI;
+    public MapManager MapManager;
     public MapTile[,] map;  // [,] initializes a 2D array
     public int mapSize;
 
@@ -50,6 +51,8 @@ public class DungeonManager : MonoBehaviour, IManager
                 map[i,j] = tile; 
             }
         }
+
+        MapManager.MapGenUpdate(map, mapSize);
 
 
         // Tell the GameState to generate us.
