@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class DungeonManager : MonoBehaviour, IManager
@@ -11,11 +12,19 @@ public class DungeonManager : MonoBehaviour, IManager
      */
 
     public DungeonGUI GUI;
-    public MapManager MapManager;
-    public MapTile[,] map;  // [,] initializes a 2D array
-    public int mapSize;
+    static public MapTile[,] map;  // [,] initializes a 2D array
+    static int mapSize = 5;
 
-    void Start()
+    public GameObject dungeonParent;
+    public GameObject TilePrefab;
+    static float xTileOffset = 5.5f;
+    static float yTileOffset = 7.0f;
+
+    // Game Events
+    public delegate void DungeonGeneratedAction(MapTile[,] map, int mapSize);
+    public static event DungeonGeneratedAction DungeonGenerated;
+
+    void Awake()
     {
         GameState.FloorStart += GenerateDungeon;
     }
@@ -36,6 +45,22 @@ public class DungeonManager : MonoBehaviour, IManager
     }
 
     /*
+     * Useful Dungeon Getters
+     */
+
+    static public Vector3 GetWorldTilePosition(Vector2 tilePosition)
+    {
+        return new Vector3(tilePosition.x * DungeonManager.xTileOffset, 0, tilePosition.y * DungeonManager.yTileOffset);
+    }
+
+    static public MapTile GetTileAtPos(Vector2 tilePosition)
+    {
+        if (tilePosition.x < 0 || tilePosition.y < 0) { return null; }
+        if (tilePosition.x >= mapSize || tilePosition.y >= mapSize) { return null; }
+        return map[(int)tilePosition.x, (int)tilePosition.y];
+    }
+
+    /*
      * Handle Dungeon Generation
      */
 
@@ -52,10 +77,30 @@ public class DungeonManager : MonoBehaviour, IManager
             }
         }
 
-        MapManager.MapGenUpdate(map, mapSize);
+        // Generate the map tiles.
+        CreateTiles(map, mapSize);
 
+        // Send dungeon generated event.
+        DungeonGenerated(map, mapSize);
 
         // Tell the GameState to generate us.
         gs.RequestManager(this);
+    }
+
+    void CreateTiles(MapTile[,] map, int mapSize)
+    {
+        for (int x = 0; x < mapSize; x++)
+        {
+            for (int y = 0; y < mapSize; y++)
+            {
+                Vector2 tilePosition = new Vector2(x, y);
+                Vector3 position = GetWorldTilePosition(tilePosition);
+                print(position);
+                GameObject currTile = Instantiate(TilePrefab, position, Quaternion.identity);
+                currTile.transform.parent = dungeonParent.transform;
+                // Instantiate creates a copy of a prefab at the given location
+
+            }
+        }
     }
 }

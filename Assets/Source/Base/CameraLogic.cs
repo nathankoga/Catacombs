@@ -11,21 +11,26 @@ public class CameraLogic : MonoBehaviour
      */
 
     public GameObject player;
-    void Start()
+    public Vector3 worldOffset;
+    private void FixedUpdate()
     {
-        GameState.ManagerUpdate += OnManagerUpdate;
+        if (GameState.GetManagerType() == ManagerType.DUNGEON)
+        {
+            LerpToWorldPos(0.08f);
+        }
     }
 
-    void OnManagerUpdate(ManagerType type, IManager mgr)
+    /*
+     * Positioning
+     */
+
+    private void LerpToWorldPos(float t)
     {
-        switch (type)
-        {
-            case (ManagerType.DUNGEON):
-                print("Camera: Overhead Dungeon View");
-                break;
-            case (ManagerType.BATTLE):
-                print("Camera: Battle View");
-                break;
-        }
+        transform.position = Vector3.Lerp(transform.position, GetTargetWorldPos(), t);
+    }
+
+    public Vector3 GetTargetWorldPos()
+    {
+        return player.transform.position + worldOffset;
     }
 }

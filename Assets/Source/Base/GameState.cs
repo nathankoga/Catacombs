@@ -18,7 +18,7 @@ public class GameState : MonoBehaviour
     public RunStats runStats;
 
     // Game Manager State
-    private IManager ActiveManager = null;
+    static protected IManager ActiveManager = null;
 
     // Game Events
     public delegate void FloorStartAction(GameState gs, DungeonFloor f);
@@ -40,5 +40,10 @@ public class GameState : MonoBehaviour
 
         if (ManagerUpdate != null)
             ManagerUpdate(ActiveManager.GetManagerType(), ActiveManager);
+    }
+
+    static public ManagerType GetManagerType()
+    {
+        return ActiveManager.GetManagerType();
     }
 }

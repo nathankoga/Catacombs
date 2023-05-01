@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerLogic : MonoBehaviour
 {
@@ -14,19 +16,64 @@ public class PlayerLogic : MonoBehaviour
      * BattleManager about that and what that enemy is, and the BattleManager will engage combat.
      */
 
-    void Start()
+    public Vector2 tilePosition = Vector2.zero;
+    public Vector3 worldOffset;
+
+    public InputAction moveAction;
+
+    private void Start()
     {
-        GameState.ManagerUpdate += OnManagerUpdate;
+        LerpToWorldPos(1.0f);
     }
 
-    void OnManagerUpdate(ManagerType type, IManager mgr)
+    /*
+     * Update stuffs
+     */
+
+    private void FixedUpdate()
     {
-        if (type == ManagerType.DUNGEON)
+        if (GameState.GetManagerType() == ManagerType.DUNGEON)
         {
-            // Enable tile movement.
-        } else
+            LerpToWorldPos(0.25f);
+        }
+    }
+
+    /*
+     * Positioning
+     */
+
+    private void LerpToWorldPos(float t)
+    {
+        transform.position = Vector3.Lerp(transform.position, GetTargetWorldPos(), t);
+    }
+
+    public Vector3 GetTargetWorldPos()
+    {
+        return DungeonManager.GetWorldTilePosition(tilePosition) + worldOffset;
+    }
+
+    /*
+     * Input Actions
+     */
+
+    private void OnMove(InputValue movementValue)
+    {
+        // Get movement vector (and normalize it a bit too)
+        // TODO : Make the input registering less buggy.
+        Vector2 movementVector = movementValue.Get<Vector2>();
+        movementVector.x = (float)Mathf.Round(movementVector.x);
+        movementVector.y = (float)Mathf.Round(movementVector.y);
+        if (GameState.GetManagerType() == ManagerType.DUNGEON)
         {
-            // Disable tile movement.
+            // print(movementVector);
+
+            // What is our new tile position?
+            Vector2 newPos = tilePosition + movementVector;
+            MapTile newTile = DungeonManager.GetTileAtPos(newPos);
+            if (newTile != null)
+            {
+                tilePosition = newPos;
+            }
         }
     }
 }
