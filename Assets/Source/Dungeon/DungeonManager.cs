@@ -99,6 +99,9 @@ public class DungeonManager : MonoBehaviour, IManager
             }
         }
 
+        map[4, 2].SetEnemy(EnemyType.Test);
+        map[2, 3].SetEnemy(EnemyType.Test);
+
         // Initialize all tiles.
         for (int i = 0; i < mapSize; i++)
         {
@@ -110,8 +113,5 @@ public class DungeonManager : MonoBehaviour, IManager
 
         // Send dungeon generated event.
         DungeonGenerated(map, mapSize);
-
-        // Tell the GameState to generate us.
-        gs.RequestManager(this);
     }
 }

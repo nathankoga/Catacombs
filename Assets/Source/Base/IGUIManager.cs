@@ -12,4 +12,6 @@ public interface IGUIManager
     public void EnableGUI();
     public void DisableGUI();
 
+    public Canvas GetCanvas();
+
 }

@@ -16,6 +16,8 @@ public class GameState : MonoBehaviour
      */
 
     public RunStats runStats;
+    public BattleManager battleManager;
+    public DungeonManager dungeonManager;
 
     // Game Manager State
     static protected IManager ActiveManager = null;
@@ -30,6 +32,7 @@ public class GameState : MonoBehaviour
     void Start()
     {
         FloorStart(this, runStats.currentFloor);
+        RequestManager(dungeonManager);
     }
     public void RequestManager(IManager mgr)
     {

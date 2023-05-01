@@ -32,7 +32,7 @@ public class PlayerLogic : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (GameState.GetManagerType() == ManagerType.DUNGEON)
+        if (GameState.GetManagerType() == ManagerType.DUNGEON || true)
         {
             LerpToWorldPos(0.25f);
         }
@@ -74,8 +74,10 @@ public class PlayerLogic : MonoBehaviour
             {
                 if (newTile.CanMoveOnto()) {
                     tilePosition = newPos;
+                    newTile.OnStep(this);
                 }
             }
         }
     }
+
 }

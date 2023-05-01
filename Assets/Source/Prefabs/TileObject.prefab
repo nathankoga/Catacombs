@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599a10372c5970449b72bdb53fc50411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isWater: 0
+  EnemyPrefab: {fileID: 4524996952171741300, guid: 351b544ad058ffe4e9eb630641250653,
+    type: 3}
   isWall: 0
   isGround: 0

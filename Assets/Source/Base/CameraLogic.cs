@@ -14,7 +14,7 @@ public class CameraLogic : MonoBehaviour
     public Vector3 worldOffset;
     private void FixedUpdate()
     {
-        if (GameState.GetManagerType() == ManagerType.DUNGEON)
+        if (GameState.GetManagerType() == ManagerType.DUNGEON || true)
         {
             LerpToWorldPos(0.08f);
         }
