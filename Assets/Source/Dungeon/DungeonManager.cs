@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DungeonManager : MonoBehaviour, IManager
 {
@@ -66,41 +67,51 @@ public class DungeonManager : MonoBehaviour, IManager
 
     void GenerateDungeon(GameState gs, DungeonFloor f)
     {
-        // TODO: dungeon generation here
-        map = new MapTile[mapSize, mapSize];  // 3x3 for PoC build
+        // Generate bare map grid.
+        map = new MapTile[mapSize, mapSize];
         
         for (int i = 0; i < mapSize; i++){            
             for (int j = 0; j < mapSize; j++){
-                MapTile tile = new MapTile();  // new tile for map
-                tile.isGround = true;          // instantiate as ground
-                map[i,j] = tile; 
+                // Create tile object.
+                Vector2 tilePosition = new Vector2(i, j);
+                Vector3 position = GetWorldTilePosition(tilePosition);
+                GameObject currTile = Instantiate(TilePrefab, position, Quaternion.identity);
+                currTile.transform.parent = dungeonParent.transform;
+
+                // Store MapTile script.
+                map[i,j] = currTile.GetComponent<MapTile>(); 
             }
         }
 
-        // Generate the map tiles.
-        CreateTiles(map, mapSize);
+        // POC dungeon generation
+        for (int i = 0; i < mapSize; i++)
+        {
+            for (int j = 0; j < mapSize; j++)
+            {
+                MapTile t = map[i,j];
+                if ((i == 1 || i == 3) && (j == 1 || j == 3))
+                {
+                    t.isWall = true;
+                } else
+                {
+                    t.isGround = true;
+                }
+            }
+        }
+
+        // Initialize all tiles.
+        for (int i = 0; i < mapSize; i++)
+        {
+            for (int j = 0; j < mapSize; j++)
+            {
+                map[i, j].Initialize();
+            }
+        }
 
         // Send dungeon generated event.
         DungeonGenerated(map, mapSize);
 
         // Tell the GameState to generate us.
         gs.RequestManager(this);
-    }
-
-    void CreateTiles(MapTile[,] map, int mapSize)
-    {
-        for (int x = 0; x < mapSize; x++)
-        {
-            for (int y = 0; y < mapSize; y++)
-            {
-                Vector2 tilePosition = new Vector2(x, y);
-                Vector3 position = GetWorldTilePosition(tilePosition);
-                print(position);
-                GameObject currTile = Instantiate(TilePrefab, position, Quaternion.identity);
-                currTile.transform.parent = dungeonParent.transform;
-                // Instantiate creates a copy of a prefab at the given location
-
-            }
-        }
     }
 }

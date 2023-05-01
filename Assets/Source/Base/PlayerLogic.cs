@@ -72,7 +72,9 @@ public class PlayerLogic : MonoBehaviour
             MapTile newTile = DungeonManager.GetTileAtPos(newPos);
             if (newTile != null)
             {
-                tilePosition = newPos;
+                if (newTile.CanMoveOnto()) {
+                    tilePosition = newPos;
+                }
             }
         }
     }
