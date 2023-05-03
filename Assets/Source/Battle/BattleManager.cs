@@ -24,6 +24,9 @@ public class BattleManager : MonoBehaviour, IManager
     private MapTile mapTile;
     private EnemyType enemyType;
 
+    // audio
+    public AudioSource deathSound;
+
     /*
      * Battle Requesting
      */
@@ -31,6 +34,7 @@ public class BattleManager : MonoBehaviour, IManager
     void Awake()
     {
         MapTile.StartBattle += EngageBattle;
+        deathSound = GetComponent<AudioSource>();
     }
 
     void EngageBattle(MapTile mapTile, EnemyType enemyType)
@@ -43,13 +47,14 @@ public class BattleManager : MonoBehaviour, IManager
     /*
      * Battle Input
      */
-
     private void Update()
     {
         if (!battleActive) return;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            // play enemy death sound
+            deathSound.Play();
             mapTile.ClearEnemy();
             gameState.RequestManager(dungeonManager);
         }
