@@ -30,10 +30,23 @@ public class PlayerLogic : MonoBehaviour
      * Update stuffs
      */
 
+    private void Update()
+    {
+        if (GameState.GetManagerType() == ManagerType.DUNGEON || true)
+        {
+            // Listen for inputs.
+            if (Input.GetKeyDown(KeyCode.W)) OnMove(new Vector2(0.0f, 1.0f));
+            if (Input.GetKeyDown(KeyCode.S)) OnMove(new Vector2(0.0f, -1.0f));
+            if (Input.GetKeyDown(KeyCode.A)) OnMove(new Vector2(-1.0f, 0.0f));
+            if (Input.GetKeyDown(KeyCode.D)) OnMove(new Vector2(1.0f, 0.0f));
+        }
+    }
+
     private void FixedUpdate()
     {
         if (GameState.GetManagerType() == ManagerType.DUNGEON || true)
         {
+            // Move to world position.
             LerpToWorldPos(0.25f);
         }
     }
@@ -56,13 +69,8 @@ public class PlayerLogic : MonoBehaviour
      * Input Actions
      */
 
-    private void OnMove(InputValue movementValue)
+    private void OnMove(Vector2 movementVector)
     {
-        // Get movement vector (and normalize it a bit too)
-        // TODO : Make the input registering less buggy.
-        Vector2 movementVector = movementValue.Get<Vector2>();
-        movementVector.x = (float)Mathf.Round(movementVector.x);
-        movementVector.y = (float)Mathf.Round(movementVector.y);
         if (GameState.GetManagerType() == ManagerType.DUNGEON)
         {
             // print(movementVector);

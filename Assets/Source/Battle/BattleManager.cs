@@ -44,10 +44,11 @@ public class BattleManager : MonoBehaviour, IManager
      * Battle Input
      */
 
-    private void OnKill(InputValue inputValue)
+    private void Update()
     {
-        print(inputValue);
-        if (battleActive)
+        if (!battleActive) return;
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             mapTile.ClearEnemy();
             gameState.RequestManager(dungeonManager);
