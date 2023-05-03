@@ -20,10 +20,12 @@ public class PlayerLogic : MonoBehaviour
     public Vector3 worldOffset;
 
     public InputAction moveAction;
+    public AudioSource moveSound;
 
     private void Start()
     {
         LerpToWorldPos(1.0f);
+        moveSound = GetComponent<AudioSource>();
     }
 
     /*
@@ -81,6 +83,7 @@ public class PlayerLogic : MonoBehaviour
             if (newTile != null)
             {
                 if (newTile.CanMoveOnto()) {
+                    moveSound.Play();
                     tilePosition = newPos;
                     newTile.OnStep(this);
                 }
