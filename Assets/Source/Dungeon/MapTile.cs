@@ -30,8 +30,7 @@ public class MapTile : MonoBehaviour
         if (isWall)
         {
             // BECOME WALL!
-            transform.localScale = new Vector3(3, 5, 3);
-            transform.Translate(0, 2, 0);
+            transform.localScale = new Vector3(0, 0, 0);
         }
     }
     public void SetEnemy(EnemyType enemyType)
