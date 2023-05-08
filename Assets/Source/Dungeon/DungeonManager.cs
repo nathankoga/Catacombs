@@ -19,7 +19,7 @@ public class DungeonManager : MonoBehaviour, IManager
     public GameObject dungeonParent;
     public GameObject TilePrefab;
     static float xTileOffset = 5.5f;
-    static float yTileOffset = 7.0f;
+    static float yTileOffset = 5.5f;
 
     // Game Events
     public delegate void DungeonGeneratedAction(MapTile[,] map, int mapSize);
@@ -89,25 +89,32 @@ public class DungeonManager : MonoBehaviour, IManager
             for (int j = 0; j < mapSize; j++)
             {
                 MapTile t = map[i,j];
-                if ((i == 1 || i == 3) && (j == 1 || j == 3))
+                t.isGround = true;
+                // t.isPath = Convert.ToBoolean(i != 1);
+
+                if (Random.Range(0.0f, 1.0f) < 0.60f)
                 {
-                    t.isWall = true;
-                } else
-                {
-                    t.isGround = true;
+                    t.isPath = true;
                 }
             }
         }
 
-        map[4, 2].SetEnemy(EnemyType.Test);
-        map[2, 3].SetEnemy(EnemyType.Test);
+        //map[4, 2].SetEnemy(EnemyType.Test);
+        //map[2, 3].SetEnemy(EnemyType.Test);
 
         // Initialize all tiles.
         for (int i = 0; i < mapSize; i++)
         {
             for (int j = 0; j < mapSize; j++)
             {
-                map[i, j].Initialize(new Vector2(i, j));
+                List<MapTile> adjacentTiles = new List<MapTile>
+                {
+                    (j != (mapSize - 1)) ? (map[i, j + 1]) : (null),
+                    (j != 0) ? (map[i, j - 1]) : (null),
+                    (i != (mapSize - 1)) ? (map[i + 1, j]) : (null),
+                    (i != 0) ? (map[i - 1, j]) : (null)
+                };
+                map[i, j].Initialize(new Vector2(i, j), adjacentTiles);
             }
         }
 

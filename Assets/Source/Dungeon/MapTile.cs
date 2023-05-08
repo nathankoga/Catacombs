@@ -13,9 +13,11 @@ public class MapTile : MonoBehaviour
 
     public bool isWall;
     public bool isGround;
+    public bool isPath;
 
     public Vector2 tilePos;
     public List<TileModelBase> tileModels;
+    private List<MapTile> adjacentTiles;
 
     // Enemy at this tile?
     private bool hasEnemy = false;
@@ -31,12 +33,14 @@ public class MapTile : MonoBehaviour
      * Configuration Methods
      */
 
-    public void Initialize(Vector2 tilePos)
+    public void Initialize(Vector2 tilePos, List<MapTile> adjacentTiles)
     {
         /*
          * Called by the DungeonManager after the Tile's options are fully configured.
          */
         this.tilePos = tilePos;
+        this.adjacentTiles = adjacentTiles;
+        print(adjacentTiles.Count);
 
         if (isWall)
         {
@@ -103,5 +107,25 @@ public class MapTile : MonoBehaviour
             // Start encounter.
             StartBattle(this, this.enemyType);
         }
+    }
+
+    public MapTile GetNorthTile()
+    {
+        return adjacentTiles[0];
+    }
+
+    public MapTile GetSouthTile()
+    {
+        return adjacentTiles[1];
+    }
+
+    public MapTile GetEastTile()
+    {
+        return adjacentTiles[2];
+    }
+
+    public MapTile GetWestTile()
+    {
+        return adjacentTiles[3];
     }
 }

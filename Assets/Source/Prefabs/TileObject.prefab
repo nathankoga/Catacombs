@@ -50,6 +50,7 @@ MonoBehaviour:
     type: 3}
   isWall: 0
   isGround: 0
+  isPath: 0
   tilePos: {x: 0, y: 0}
   tileModels: []
 --- !u!1001 &1769842860956902319
@@ -67,13 +68,23 @@ PrefabInstance:
     - target: {fileID: -9202605092671148497, guid: e7778ceaa0f4cdf47811a6a930e6c827,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8812935953393407744, guid: e7778ceaa0f4cdf47811a6a930e6c827,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6e686dd599762534c875f8786ea5139d, type: 2}
+    - target: {fileID: -7284328924082721351, guid: e7778ceaa0f4cdf47811a6a930e6c827,
+        type: 3}
+      propertyPath: m_Name
+      value: East
+      objectReference: {fileID: 0}
+    - target: {fileID: -7284328924082721351, guid: e7778ceaa0f4cdf47811a6a930e6c827,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -5797657277268337797, guid: e7778ceaa0f4cdf47811a6a930e6c827,
         type: 3}
       propertyPath: m_IsActive
@@ -89,6 +100,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6e686dd599762534c875f8786ea5139d, type: 2}
+    - target: {fileID: -4841133546172731900, guid: e7778ceaa0f4cdf47811a6a930e6c827,
+        type: 3}
+      propertyPath: m_Name
+      value: South
+      objectReference: {fileID: 0}
+    - target: {fileID: -4841133546172731900, guid: e7778ceaa0f4cdf47811a6a930e6c827,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4636772477666767962, guid: e7778ceaa0f4cdf47811a6a930e6c827,
         type: 3}
       propertyPath: m_IsActive
@@ -99,6 +120,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6e686dd599762534c875f8786ea5139d, type: 2}
+    - target: {fileID: -623392884540110017, guid: e7778ceaa0f4cdf47811a6a930e6c827,
+        type: 3}
+      propertyPath: m_Name
+      value: North
+      objectReference: {fileID: 0}
     - target: {fileID: -623392884540110017, guid: e7778ceaa0f4cdf47811a6a930e6c827,
         type: 3}
       propertyPath: m_IsActive
@@ -162,7 +188,7 @@ PrefabInstance:
     - target: {fileID: 4467587745693565585, guid: e7778ceaa0f4cdf47811a6a930e6c827,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6029627410322689103, guid: e7778ceaa0f4cdf47811a6a930e6c827,
         type: 3}
@@ -179,6 +205,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6e686dd599762534c875f8786ea5139d, type: 2}
+    - target: {fileID: 8420817488198879301, guid: e7778ceaa0f4cdf47811a6a930e6c827,
+        type: 3}
+      propertyPath: m_Name
+      value: West
+      objectReference: {fileID: 0}
+    - target: {fileID: 8420817488198879301, guid: e7778ceaa0f4cdf47811a6a930e6c827,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9001102892061712832, guid: e7778ceaa0f4cdf47811a6a930e6c827,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -192,6 +228,25 @@ PrefabInstance:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 7446590082972375451, guid: e7778ceaa0f4cdf47811a6a930e6c827,
     type: 3}
+--- !u!1 &1785248273078570368 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -9202605092671148497, guid: e7778ceaa0f4cdf47811a6a930e6c827,
+    type: 3}
+  m_PrefabInstance: {fileID: 1769842860956902319}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6568898934102380646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785248273078570368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64bfc2c202059aa4bbe2cd01ab60b1d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapTile: {fileID: 6909779593524087989}
 --- !u!4 &2698158406528400893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4467138112451190354, guid: e7778ceaa0f4cdf47811a6a930e6c827,
