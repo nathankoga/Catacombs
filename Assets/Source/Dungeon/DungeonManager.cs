@@ -14,7 +14,7 @@ public class DungeonManager : MonoBehaviour, IManager
 
     public DungeonGUI GUI;
     static public MapTile[,] map;  // [,] initializes a 2D array
-    static int mapSize = 5;
+    static int mapSize = 25;
 
     public GameObject dungeonParent;
     public GameObject TilePrefab;
@@ -107,7 +107,7 @@ public class DungeonManager : MonoBehaviour, IManager
         {
             for (int j = 0; j < mapSize; j++)
             {
-                map[i, j].Initialize();
+                map[i, j].Initialize(new Vector2(i, j));
             }
         }
 

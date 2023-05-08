@@ -50,6 +50,8 @@ MonoBehaviour:
     type: 3}
   isWall: 0
   isGround: 0
+  tilePos: {x: 0, y: 0}
+  tileModels: []
 --- !u!1001 &1769842860956902319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61,6 +63,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PathForest
+      objectReference: {fileID: 0}
+    - target: {fileID: -9202605092671148497, guid: e7778ceaa0f4cdf47811a6a930e6c827,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8812935953393407744, guid: e7778ceaa0f4cdf47811a6a930e6c827,
         type: 3}
@@ -213,6 +220,36 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6e686dd599762534c875f8786ea5139d, type: 2}
+    - target: {fileID: -6838314626165903524, guid: 94c3836be5911c54cbbcf1b5f0c418ed,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -6838314626165903524, guid: 94c3836be5911c54cbbcf1b5f0c418ed,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -6838314626165903524, guid: 94c3836be5911c54cbbcf1b5f0c418ed,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -5842834123012738560, guid: 94c3836be5911c54cbbcf1b5f0c418ed,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -5842834123012738560, guid: 94c3836be5911c54cbbcf1b5f0c418ed,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -5842834123012738560, guid: 94c3836be5911c54cbbcf1b5f0c418ed,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: -2292947187424803871, guid: 94c3836be5911c54cbbcf1b5f0c418ed,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -286,12 +323,12 @@ PrefabInstance:
     - target: {fileID: 6511019187714556560, guid: 94c3836be5911c54cbbcf1b5f0c418ed,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8218411194209183115, guid: 94c3836be5911c54cbbcf1b5f0c418ed,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8683870101709738975, guid: 94c3836be5911c54cbbcf1b5f0c418ed,
         type: 3}
@@ -307,3 +344,22 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7763081347652984292}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7779341866892506059 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -9202605092671148497, guid: 94c3836be5911c54cbbcf1b5f0c418ed,
+    type: 3}
+  m_PrefabInstance: {fileID: 7763081347652984292}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7042320907984499028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7779341866892506059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf2cfcd4ba133f948bb3f412206aebfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapTile: {fileID: 6909779593524087989}

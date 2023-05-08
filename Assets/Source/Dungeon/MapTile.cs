@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,24 +14,40 @@ public class MapTile : MonoBehaviour
     public bool isWall;
     public bool isGround;
 
+    public Vector2 tilePos;
+    public List<TileModelBase> tileModels;
+
     // Enemy at this tile?
     private bool hasEnemy = false;
     private GameObject enemyObject;
     private EnemyType enemyType;
 
+    private void Awake()
+    {
+        tileModels = new List<TileModelBase>();
+    }
+
     /*
      * Configuration Methods
      */
 
-    public void Initialize()
+    public void Initialize(Vector2 tilePos)
     {
         /*
          * Called by the DungeonManager after the Tile's options are fully configured.
          */
+        this.tilePos = tilePos;
+
         if (isWall)
         {
             // BECOME WALL!
             transform.localScale = new Vector3(0, 0, 0);
+        }
+
+        // Initialize all tile children.
+        foreach (var tileModel in tileModels)
+        {
+            tileModel.Initialize();
         }
     }
     public void SetEnemy(EnemyType enemyType)
@@ -53,6 +70,15 @@ public class MapTile : MonoBehaviour
     {
         hasEnemy = false;
         Destroy(enemyObject);
+    }
+
+    /*
+     * Registering 
+     */
+
+    public void RegisterTileModel(TileModelBase tmb)
+    {
+        tileModels.Add(tmb);
     }
 
     /*
