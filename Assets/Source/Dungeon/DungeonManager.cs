@@ -13,8 +13,9 @@ public class DungeonManager : MonoBehaviour, IManager
      */
 
     public DungeonGUI GUI;
-    static public MapTile[,] map;  // [,] initializes a 2D array
-    
+    static public MapTile[,] map;  // [,] initializes a 2D array of map tiles
+    static public RoomManager roomManager; 
+
     // current map stats: Might want to refactor when we make new dungeons??
     static int mapSize = 25;
     static int roomCount = 7;
