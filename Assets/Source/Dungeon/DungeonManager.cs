@@ -14,7 +14,12 @@ public class DungeonManager : MonoBehaviour, IManager
 
     public DungeonGUI GUI;
     static public MapTile[,] map;  // [,] initializes a 2D array
+    
+    // current map stats: Might want to refactor when we make new dungeons??
     static int mapSize = 25;
+    static int roomCount = 7;
+    static int minRoomSize = 3;
+    static int maxRoomSize = 5;
 
     public GameObject dungeonParent;
     public GameObject TilePrefab;
@@ -83,6 +88,46 @@ public class DungeonManager : MonoBehaviour, IManager
             }
         }
 
+        /*START OF RANDOM GEN CODE */
+
+        // take each room (7 rooms), and continue building them until they don't overlap
+        // then draw paths to connect rooms together
+        // in the future, might explicitly build starting room -> same tutorial room each time (like binding of isaac start)
+
+        // for now, a quick representation of room placements in map as int vectors  
+        //      try refactoring later      
+        int[,] placementMap = new int[mapSize, mapSize];  // defaults to 0 in c#, according to stack overflow 
+
+        Vector2Int[] currentRooms;  // point is a struct of x,y pairs
+
+        int roomsPlaced= 0 ;
+        while (roomsPlaced < roomCount){  // while we still need to create rooms
+            
+            // int Random.Range(inclusive, exclusive);
+            Vector2Int room = new Vector2Int(Random.Range(minRoomSize, maxRoomSize + 1), Random.Range(minRoomSize, maxRoomSize + 1));  // create randomly sized room
+            
+            int x_origin = Random.Range(0, maxRoomSize- room[0] + 1);
+            int y_origin = Random.Range(0, maxRoomSize- room[1] + 1);  // create origin point (bot-left & right origin)
+
+            bool intersect = false;
+
+            for (int idx = 0; idx < roomsPlaced; idx++){
+                int lPad = -1; int rPad = 1; int uPad = -1; int dPad = 1;
+                // check for any overlap (with padding)
+                // bool l_check = currentRooms[idx];
+                // bool r_check =;
+                // bool t_check = ;
+                // bool d_check =;
+
+            }
+            
+            
+            roomsPlaced = roomCount;
+        }
+        
+        
+        /*END OF RANDOM DUNGEON GEN CODE*/
+        
         // POC dungeon generation
         for (int i = 0; i < mapSize; i++)
         {
@@ -94,6 +139,7 @@ public class DungeonManager : MonoBehaviour, IManager
 
                 if (Random.Range(0.0f, 1.0f) < 0.60f)
                 {
+                    // setting isPath to true makes the current tile into one of path
                     t.isPath = true;
                 }
             }
@@ -109,6 +155,7 @@ public class DungeonManager : MonoBehaviour, IManager
             {
                 List<MapTile> adjacentTiles = new List<MapTile>
                 {
+                    // instantiate neighbors. If at edge -> neighbor is null
                     (j != (mapSize - 1)) ? (map[i, j + 1]) : (null),
                     (j != 0) ? (map[i, j - 1]) : (null),
                     (i != (mapSize - 1)) ? (map[i + 1, j]) : (null),
