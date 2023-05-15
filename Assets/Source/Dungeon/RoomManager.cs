@@ -63,9 +63,18 @@ public class RoomManager : MonoBehaviour
                 Debug.LogFormat("room {0} placed!", roomsPlaced);
             }
         }
-        
+
+        // Print statement to make sure all rooms don't collide 
+
+        for (int curr = 0; curr < numRooms; curr++){
+            int xStart = finalRooms[curr].getMinX();
+            int xEnd= finalRooms[curr].getMaxX();
+            int yStart = finalRooms[curr].getMinY();
+            int yEnd= finalRooms[curr].getMaxY();
+
+            Debug.LogFormat("Room {0}: bot left: ({1},{2}) top right: ({3},{4})", curr, xStart, yStart, xEnd, yEnd); 
+        }
     }
-    
 }
 
 // public so that it's returnable in setRooms()
@@ -88,8 +97,8 @@ public class Room
         // rooms intersect if projections overlap on both axes (both have self.max > other.min)
         // int lPad = -1; int rPad = 1; int uPad = -1; int dPad = 1;  
         // try to add padding between rooms later?       
-        bool xOverlap = (this.getMaxX() > other.getMinX()) & (other.getMaxX() > this.getMinX());
-        bool yOverlap = (this.getMaxY() > other.getMinY()) & (other.getMaxY() > this.getMinY());
+        bool xOverlap = (this.getMaxX() >= other.getMinX()) & (other.getMaxX() >= this.getMinX());
+        bool yOverlap = (this.getMaxY() >= other.getMinY()) & (other.getMaxY() >= this.getMinY());
         return xOverlap & yOverlap;
     }
     

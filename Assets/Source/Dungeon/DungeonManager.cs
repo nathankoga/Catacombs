@@ -15,6 +15,7 @@ public class DungeonManager : MonoBehaviour, IManager
     public DungeonGUI GUI;
     static public MapTile[,] map;  // [,] initializes a 2D array of map tiles
     public RoomManager roomManager;   
+    public Room[] rooms;
 
     // current map stats: Might want to refactor when we make new dungeons??
     static int mapSize = 25;
@@ -102,7 +103,7 @@ public class DungeonManager : MonoBehaviour, IManager
         roomManager.initRoomManager(mapSize, roomCount, minRoomSize, maxRoomSize); 
         
         roomManager.setRooms();  // don't know how setRooms will work when generating mutliple floors??
-        roomManager.getFinalRooms();        
+        rooms = roomManager.getFinalRooms();        
         
         /*END OF RANDOM DUNGEON GEN CODE*/
         
@@ -115,10 +116,25 @@ public class DungeonManager : MonoBehaviour, IManager
                 t.isGround = true;
                 // t.isPath = Convert.ToBoolean(i != 1);
 
-                if (Random.Range(0.0f, 1.0f) < 0.60f)
-                {
-                    // setting isPath to true makes the current tile into one of path
-                    t.isPath = true;
+                // if (Random.Range(0.0f, 1.0f) < 0.60f)
+                // {
+                //     // setting isPath to true makes the current tile into one of path
+                //     t.isPath = true;
+                // }
+            }
+        }
+
+        for (int curr = 0; curr < roomCount; curr++){
+            int xStart = rooms[curr].getMinX();
+            int xEnd= rooms[curr].getMaxX();
+            int yStart = rooms[curr].getMinY();
+            int yEnd= rooms[curr].getMaxY();
+
+            // possibly an off-by one error 
+            for (int i = xStart; i < xEnd; i++){
+                for (int j = yStart; j < yEnd; j++){
+                        MapTile t = map[i,j];
+                        t.isPath = true;
                 }
             }
         }
