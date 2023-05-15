@@ -40,7 +40,7 @@ public class MapTile : MonoBehaviour
          */
         this.tilePos = tilePos;
         this.adjacentTiles = adjacentTiles;
-        print(adjacentTiles.Count);
+        // print(adjacentTiles.Count);
 
         if (isWall)
         {

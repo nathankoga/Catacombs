@@ -14,7 +14,7 @@ public class DungeonManager : MonoBehaviour, IManager
 
     public DungeonGUI GUI;
     static public MapTile[,] map;  // [,] initializes a 2D array of map tiles
-    static public RoomManager roomManager; 
+    public RoomManager roomManager;   
 
     // current map stats: Might want to refactor when we make new dungeons??
     static int mapSize = 25;
@@ -31,6 +31,7 @@ public class DungeonManager : MonoBehaviour, IManager
     public delegate void DungeonGeneratedAction(MapTile[,] map, int mapSize);
     public static event DungeonGeneratedAction DungeonGenerated;
 
+    
     void Awake()
     {
         GameState.FloorStart += GenerateDungeon;
@@ -97,8 +98,11 @@ public class DungeonManager : MonoBehaviour, IManager
 
         // for now, a quick representation of room placements in map as int vectors  
 
-        // roomManager.setRooms();  // don't know how setRooms will work when generating mutliple floors??
-        // roomManager.getFinalRooms();        
+        // hacky constructor because idk how to init objects in C# 
+        roomManager.initRoomManager(mapSize, roomCount, minRoomSize, maxRoomSize); 
+        
+        roomManager.setRooms();  // don't know how setRooms will work when generating mutliple floors??
+        roomManager.getFinalRooms();        
         
         /*END OF RANDOM DUNGEON GEN CODE*/
         

@@ -15,9 +15,9 @@ public class RoomManager : MonoBehaviour
     private int[,] placementMap;  
     private Room[] finalRooms;
 
-    public RoomManager(int size, int numRooms, int min, int max) {
+    public void initRoomManager(int size, int nRooms, int min, int max) {
         mapSize = size;
-        numRooms = numRooms;
+        numRooms = nRooms;
         minRoomSize = min;
         maxRoomSize = max;
         placementMap = new int[size, size];  // defaults values to 0 in c#, says internet
@@ -30,8 +30,11 @@ public class RoomManager : MonoBehaviour
 
     public void setRooms(){
 
+        Debug.Log("starting");
         int roomsPlaced = 0;
+        // Debug.LogFormat("roomsPlaced: {0}   numRooms: {1}", roomsPlaced, numRooms);
         while (roomsPlaced < numRooms){
+            // Debug.Log("in the while loop");
             // create a new room
             // Random.Range(inclusive, exclusive);
             Vector2Int roomSize = new Vector2Int(Random.Range(minRoomSize, maxRoomSize + 1), 
@@ -57,9 +60,10 @@ public class RoomManager : MonoBehaviour
             if (!overlap){
                 finalRooms[roomsPlaced] = newRoom;
                 roomsPlaced++;
-                Debug.Log("room placed");
+                Debug.LogFormat("room {0} placed!", roomsPlaced);
             }
         }
+        
     }
     
 }
