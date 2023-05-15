@@ -96,36 +96,9 @@ public class DungeonManager : MonoBehaviour, IManager
         // in the future, might explicitly build starting room -> same tutorial room each time (like binding of isaac start)
 
         // for now, a quick representation of room placements in map as int vectors  
-        //      try refactoring later      
-        int[,] placementMap = new int[mapSize, mapSize];  // defaults to 0 in c#, according to stack overflow 
 
-        Vector2Int[] currentRooms;  // point is a struct of x,y pairs
-
-        int roomsPlaced= 0 ;
-        while (roomsPlaced < roomCount){  // while we still need to create rooms
-            
-            // int Random.Range(inclusive, exclusive);
-            Vector2Int room = new Vector2Int(Random.Range(minRoomSize, maxRoomSize + 1), Random.Range(minRoomSize, maxRoomSize + 1));  // create randomly sized room
-            
-            int x_origin = Random.Range(0, maxRoomSize- room[0] + 1);
-            int y_origin = Random.Range(0, maxRoomSize- room[1] + 1);  // create origin point (bot-left & right origin)
-
-            bool intersect = false;
-
-            for (int idx = 0; idx < roomsPlaced; idx++){
-                int lPad = -1; int rPad = 1; int uPad = -1; int dPad = 1;
-                // check for any overlap (with padding)
-                // bool l_check = currentRooms[idx];
-                // bool r_check =;
-                // bool t_check = ;
-                // bool d_check =;
-
-            }
-            
-            
-            roomsPlaced = roomCount;
-        }
-        
+        // roomManager.setRooms();  // don't know how setRooms will work when generating mutliple floors??
+        // roomManager.getFinalRooms();        
         
         /*END OF RANDOM DUNGEON GEN CODE*/
         

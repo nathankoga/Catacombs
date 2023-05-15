@@ -7,10 +7,65 @@ public class RoomManager : MonoBehaviour
     // refactor all room logic 
     // (check for overlaps, store individual rooms, generate random rooms)
     // into this class: RoomManager   
+
+    private int minRoomSize;
+    private int maxRoomSize;
+    private int mapSize;
+    private int numRooms;
+    private int[,] placementMap;  
+    private Room[] finalRooms;
+
+    public RoomManager(int size, int numRooms, int min, int max) {
+        mapSize = size;
+        numRooms = numRooms;
+        minRoomSize = min;
+        maxRoomSize = max;
+        placementMap = new int[size, size];  // defaults values to 0 in c#, says internet
+        finalRooms = new Room[numRooms];
+    }
+
+    void Awake(){ }
+    
+    public Room[] getFinalRooms(){ return finalRooms; }
+
+    public void setRooms(){
+
+        int roomsPlaced = 0;
+        while (roomsPlaced < numRooms){
+            // create a new room
+            // Random.Range(inclusive, exclusive);
+            Vector2Int roomSize = new Vector2Int(Random.Range(minRoomSize, maxRoomSize + 1), 
+                                            Random.Range(minRoomSize, maxRoomSize + 1));
+            
+            Vector2Int roomPos = new Vector2Int(Random.Range(0, mapSize - roomSize[0] + 1), 
+                                            Random.Range(0, mapSize - roomSize[1] + 1));
+            Room newRoom = new Room(roomPos, roomSize);
+
+            // check for intersections. If no intersections, add to finalRooms
+            bool overlap = false;
+
+            // probably don't need to use quadTree for collisions.
+            for (int idx = 0; idx < roomsPlaced; idx++){
+                bool intersect = newRoom.intersects(finalRooms[idx]);
+                if (intersect){
+                    Debug.Log("room failed");
+                    overlap = true; 
+                    break; 
+                }
+            }
+
+            if (!overlap){
+                finalRooms[roomsPlaced] = newRoom;
+                roomsPlaced++;
+                Debug.Log("room placed");
+            }
+        }
+    }
     
 }
 
-class Room 
+// public so that it's returnable in setRooms()
+public class Room 
 { 
     private Vector2Int pos;   // origin coords for <botLeft, botRight>
     private Vector2Int size;  // vector for <width, height>
