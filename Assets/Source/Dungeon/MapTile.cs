@@ -54,6 +54,11 @@ public class MapTile : MonoBehaviour
             
         }
     }
+
+    public bool hasAnEnemy(){
+        return hasEnemy;
+    }
+
     public void SetEnemy(EnemyType enemyType)
     {
         this.enemyType = enemyType;

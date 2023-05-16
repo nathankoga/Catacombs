@@ -183,6 +183,27 @@ public class DungeonManager : MonoBehaviour, IManager
         Vector2Int playerPos = rooms[0].GetRandomInBounds();
         player.SetPosition((Vector2)playerPos);
 
+        // spawn enemies in other rooms
+        for (int idx = 1; idx < roomCount; idx++){
+            
+            // random number of enemies (1~3)
+            int numEnemies = Random.Range(1,4);
+
+            for (int z = 0; z < numEnemies; z++){
+                
+                bool enemyNotPlaced = true;
+                while (enemyNotPlaced){
+                    Vector2Int enemyPos = rooms[idx].GetRandomInBounds();
+                    int x = enemyPos.x; 
+                    int y = enemyPos.y; 
+                    if (!map[x,y].hasAnEnemy()){
+                        map[x,y].SetEnemy(EnemyType.Test);
+                        enemyNotPlaced = false;
+                    }
+                }
+            }
+        }
+        
         // Send dungeon generated event.
         DungeonGenerated(map, mapSize);
     }
