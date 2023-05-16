@@ -1859,6 +1859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GUI: {fileID: 343679790}
   roomManager: {fileID: 2101417408}
+  player: {fileID: 1664144007}
   dungeonParent: {fileID: 1934801511}
   TilePrefab: {fileID: 2962320238692363434, guid: 7fc24f3d60d1438498f7fdce228f6b74,
     type: 3}

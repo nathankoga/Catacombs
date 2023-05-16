@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,7 +16,10 @@ public class DungeonManager : MonoBehaviour, IManager
     public DungeonGUI GUI;
     static public MapTile[,] map;  // [,] initializes a 2D array of map tiles
     public RoomManager roomManager;   
-    public Room[] rooms;
+    public List<Room> rooms;
+    public PathTree paths = new PathTree();
+
+    public PlayerLogic player;
 
     // current map stats: Might want to refactor when we make new dungeons??
     static int mapSize = 25;
@@ -25,8 +29,8 @@ public class DungeonManager : MonoBehaviour, IManager
 
     public GameObject dungeonParent;
     public GameObject TilePrefab;
-    static float xTileOffset = 5.5f;
-    static float yTileOffset = 5.5f;
+    static float xTileOffset = 5.0f;
+    static float yTileOffset = 5.0f;
 
     // Game Events
     public delegate void DungeonGeneratedAction(MapTile[,] map, int mapSize);
@@ -87,7 +91,10 @@ public class DungeonManager : MonoBehaviour, IManager
                 currTile.transform.parent = dungeonParent.transform;
 
                 // Store MapTile script.
-                map[i,j] = currTile.GetComponent<MapTile>(); 
+                map[i,j] = currTile.GetComponent<MapTile>();
+
+                // Initialize this tile.
+                map[i, j].isGround = false;
             }
         }
 
@@ -103,26 +110,27 @@ public class DungeonManager : MonoBehaviour, IManager
         roomManager.initRoomManager(mapSize, roomCount, minRoomSize, maxRoomSize); 
         
         roomManager.setRooms();  // don't know how setRooms will work when generating mutliple floors??
-        rooms = roomManager.getFinalRooms();        
+        rooms = roomManager.getFinalRooms();  
+        
+        // Create paths.
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            for (int j = 0; j < rooms.Count; j++)
+            {
+                if (i == j) continue;
+                if (j < i) continue;
+                DungeonPath path = new DungeonPath(rooms[i], rooms[j]);
+                paths.AddPath(path);
+            }
+        }
+
+        // Cull paths.
+        paths.Cull(rooms, 0.0f);
+
         
         /*END OF RANDOM DUNGEON GEN CODE*/
         
         // POC dungeon generation
-        for (int i = 0; i < mapSize; i++)
-        {
-            for (int j = 0; j < mapSize; j++)
-            {
-                MapTile t = map[i,j];
-                t.isGround = true;
-                // t.isPath = Convert.ToBoolean(i != 1);
-
-                // if (Random.Range(0.0f, 1.0f) < 0.60f)
-                // {
-                //     // setting isPath to true makes the current tile into one of path
-                //     t.isPath = true;
-                // }
-            }
-        }
 
         for (int curr = 0; curr < roomCount; curr++){
             int xStart = rooms[curr].getMinX();
@@ -134,8 +142,20 @@ public class DungeonManager : MonoBehaviour, IManager
             for (int i = xStart; i < xEnd; i++){
                 for (int j = yStart; j < yEnd; j++){
                         MapTile t = map[i,j];
-                        t.isPath = true;
+                        t.isGround = true;
                 }
+            }
+        }
+
+        List<DungeonPath> realPaths = paths.GetPath();
+        for (int i = 0; i < realPaths.Count; i++)
+        {
+            List<Vector2Int> path = realPaths[i].GetPath();
+            for (int j = 0; j < path.Count; j++)
+            {
+                Vector2Int curr = path[j];
+                MapTile t = map[curr.x, curr.y];
+                t.isPath = true;
             }
         }
 
@@ -159,7 +179,142 @@ public class DungeonManager : MonoBehaviour, IManager
             }
         }
 
+        // Put player in first room.
+        Vector2Int playerPos = rooms[0].GetRandomInBounds();
+        player.SetPosition((Vector2)playerPos);
+
         // Send dungeon generated event.
         DungeonGenerated(map, mapSize);
+    }
+}
+
+
+public class DungeonPath
+{
+    public Room roomA;
+    public Room roomB;
+    private List<Vector2Int> vecPath = new List<Vector2Int>();
+    public DungeonPath(Room roomA, Room roomB)
+    {
+        this.roomA = roomA;
+        this.roomB = roomB;
+        this.CalculateVectorPath();
+    }
+
+    public int Distance()
+    {
+        return vecPath.Count;
+    }
+
+    private void CalculateVectorPath()
+    {
+        Vector2Int start = roomA.pathOrigin;
+        Vector2Int end = roomB.pathOrigin;
+        Vector2Int curr = start;
+        vecPath.Add(curr);
+
+        while (curr.x != end.x)
+        {
+            int direction = (end.x > curr.x) ? 1 : -1;
+            curr = curr + new Vector2Int(direction, 0);
+            vecPath.Add(curr);
+        }
+
+        while (curr.y != end.y)
+        {
+            int direction = (end.y > curr.y) ? 1 : -1;
+            curr = curr + new Vector2Int(0, direction);
+            vecPath.Add(curr);
+        }
+    }
+
+    public List<Vector2Int> GetPath()
+    {
+        return vecPath;
+    }
+}
+
+
+public class PathTree
+{
+    List<DungeonPath> dungeonPaths = new List<DungeonPath>();
+
+    public void AddPath(DungeonPath path)
+    {
+        dungeonPaths.Add(path);
+    }
+
+    public List<DungeonPath> GetPath() { return dungeonPaths; }
+
+    public void Cull(List<Room> rooms, float bonusPathRatio)
+    {
+        // Sort by length.
+        dungeonPaths.Sort((x, y) => x.Distance().CompareTo(y.Distance()));
+
+        // Set up consts.
+        List<DungeonPath> newPath = new List<DungeonPath>();
+        List<DungeonPath> extraPaths = new List<DungeonPath>();
+
+        // Algo consts/funcs.
+        int i = 0;
+        int vertices = rooms.Count;
+        List<int> parent = new List<int>();
+        for (int j = 0; j < vertices; j++) parent.Add(j);
+        List<int> rank = new List<int>();
+        for (int j = 0; j < vertices; j++) rank.Add(0);
+
+        int Find(int i)
+        {
+            if (parent[i] != i) parent[i] = Find(parent[i]);
+            return parent[i];
+        }
+
+        void Union(int x, int y)
+        {
+            int xRoot = Find(x);
+            int yRoot = Find(y);
+            if (xRoot == yRoot) return;
+            if (rank[xRoot] < rank[yRoot]) parent[xRoot] = yRoot;
+            else if (rank[yRoot] < rank[xRoot]) parent[yRoot] = xRoot;
+            else
+            {
+                parent[yRoot] = xRoot;
+                rank[xRoot] = rank[xRoot] + 1;
+            }
+        }
+
+        // Kruskal's algorithm.
+        while (newPath.Count < vertices - 1)
+        {
+            DungeonPath curr = dungeonPaths[i];
+            int x = rooms.IndexOf(curr.roomA);
+            int y = rooms.IndexOf(curr.roomB);
+            int xRoot = Find(x);
+            int yRoot = Find(y);
+            if (xRoot != yRoot)
+            {
+                newPath.Add(curr);
+                Union(xRoot, yRoot);
+            } else
+            {
+                extraPaths.Add(curr);
+            }
+            i++;
+        }
+
+        // Add the rest of the extra paths.
+        for (int p = i; p < dungeonPaths.Count; p++)
+        {
+            extraPaths.Add(dungeonPaths[p]);
+        }
+
+        int bonusPathCount = (int)(extraPaths.Count * bonusPathRatio);
+        for (int p = 0; p < bonusPathCount; p++)
+        {
+            newPath.Add(extraPaths[p]);
+        }
+
+        // Ok its gamer time
+        this.dungeonPaths = newPath;
     }
 }

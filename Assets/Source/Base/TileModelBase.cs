@@ -10,5 +10,6 @@ public abstract class TileModelBase : MonoBehaviour
     {
         mapTile.RegisterTileModel(this);
     }
+    abstract public bool CanInitialize();
     abstract public void Initialize();
 }

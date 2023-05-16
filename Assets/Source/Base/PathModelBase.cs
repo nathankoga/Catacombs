@@ -6,6 +6,10 @@ using static UnityEngine.UI.GridLayoutGroup;
 
 public abstract class PathModelBase : TileModelBase
 {
+    public override bool CanInitialize()
+    {
+        return this.mapTile.isPath = true;
+    }
     public override void Initialize()
     {
         SetPathingVisibility();

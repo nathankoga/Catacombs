@@ -40,18 +40,18 @@ public class MapTile : MonoBehaviour
          */
         this.tilePos = tilePos;
         this.adjacentTiles = adjacentTiles;
-        // print(adjacentTiles.Count);
-
-        if (isWall)
-        {
-            // BECOME WALL!
-            transform.localScale = new Vector3(0, 0, 0);
-        }
 
         // Initialize all tile children.
         foreach (var tileModel in tileModels)
         {
-            tileModel.Initialize();
+            if (tileModel.CanInitialize())
+            {
+                tileModel.Initialize();
+            } else
+            {
+                tileModel.transform.gameObject.SetActive(false);
+            }
+            
         }
     }
     public void SetEnemy(EnemyType enemyType)
@@ -94,7 +94,7 @@ public class MapTile : MonoBehaviour
         /*
          * Called by the Player to determine if this can be moved onto.
          */
-        return isGround;
+        return isGround || isPath;
     }
 
     public void OnStep(PlayerLogic player)

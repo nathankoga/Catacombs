@@ -13,7 +13,7 @@ public class RoomManager : MonoBehaviour
     private int mapSize;
     private int numRooms;
     private int[,] placementMap;  
-    private Room[] finalRooms;
+    private List<Room> finalRooms = new List<Room>();
 
     public void initRoomManager(int size, int nRooms, int min, int max) {
         mapSize = size;
@@ -21,12 +21,11 @@ public class RoomManager : MonoBehaviour
         minRoomSize = min;
         maxRoomSize = max;
         placementMap = new int[size, size];  // defaults values to 0 in c#, says internet
-        finalRooms = new Room[numRooms];
     }
 
     void Awake(){ }
     
-    public Room[] getFinalRooms(){ return finalRooms; }
+    public List<Room> getFinalRooms(){ return finalRooms; }
 
     public void setRooms(){
 
@@ -58,7 +57,7 @@ public class RoomManager : MonoBehaviour
             }
 
             if (!overlap){
-                finalRooms[roomsPlaced] = newRoom;
+                finalRooms.Add(newRoom);
                 roomsPlaced++;
                 Debug.LogFormat("room {0} placed!", roomsPlaced);
             }
@@ -82,16 +81,23 @@ public class Room
 { 
     private Vector2Int pos;   // origin coords for <botLeft, botRight>
     private Vector2Int size;  // vector for <width, height>
+    public Vector2Int pathOrigin;
     
     public Room(Vector2Int roomPos, Vector2Int roomSize){
         pos = roomPos;   // constructor 
         size = roomSize; 
+        pathOrigin = GetRandomInBounds();
         }
 
     public int getMinX() { return pos[0]; }
     public int getMaxX() { return pos[0] + size[0]; }
     public int getMinY() { return pos[1]; }
     public int getMaxY() { return pos[1] + size[1]; }
+
+    public Vector2Int GetRandomInBounds()
+    {
+        return new Vector2Int(Random.Range(getMinX(), getMaxX()), Random.Range(getMinY(), getMaxY()));
+    }
 
     public bool intersects(Room other){
         // rooms intersect if projections overlap on both axes (both have self.max > other.min)

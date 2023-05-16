@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class BaseForest : TileModelBase
 {
-    // Start is called before the first frame update
+    public override bool CanInitialize()
+    {
+        return mapTile.isGround;
+    }
     public override void Initialize()
     {
         if (Random.Range(0, 100) < 70)

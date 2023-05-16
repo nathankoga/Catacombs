@@ -67,6 +67,12 @@ public class PlayerLogic : MonoBehaviour
         return DungeonManager.GetWorldTilePosition(tilePosition) + worldOffset;
     }
 
+    public void SetPosition(Vector2 pos)
+    {
+        this.tilePosition = pos;
+        LerpToWorldPos(1.0f);
+    }
+
     /*
      * Input Actions
      */
