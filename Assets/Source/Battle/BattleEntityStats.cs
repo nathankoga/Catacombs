@@ -11,9 +11,9 @@ public class PlayerBattleEntityStats
 
     // starting battle attributes (default at 1)
     public int ferocity = 1;
-    public int stubborness = 1;
+    public int stubbornness = 1;
     public int precision = 1;
-    public int agility = 1; 
+    public int grace = 1; 
 
     public int gems = 0;
     public Amulet[] Amulets = Array.Empty<Amulet>();
