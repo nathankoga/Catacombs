@@ -349,6 +349,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7102092856d914c907eeb4ed17ffd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  tutorialText: {fileID: 1335269201}
   canvas: {fileID: 1978459573}
 --- !u!1 &410087039
 GameObject:
