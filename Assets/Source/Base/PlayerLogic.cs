@@ -16,6 +16,9 @@ public class PlayerLogic : MonoBehaviour
      * BattleManager about that and what that enemy is, and the BattleManager will engage combat.
      */
 
+    public delegate void UserInputAction();
+    public static event UserInputAction MoveUpdate;
+    
     public Vector2 tilePosition = Vector2.zero;
     public Vector3 worldOffset;
 
@@ -81,6 +84,9 @@ public class PlayerLogic : MonoBehaviour
     {
         if (GameState.GetManagerType() == ManagerType.DUNGEON)
         {
+            
+            // MoveUpdate is observed by DungeonGUI, which leads to RemoveTutorialText to be called
+            MoveUpdate();
             // print(movementVector);
 
             // What is our new tile position?
