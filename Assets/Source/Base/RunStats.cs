@@ -11,6 +11,6 @@ public class RunStats : MonoBehaviour
      */
 
     public DungeonFloor currentFloor = DungeonFloor.FLOOR1;
-    public BattleEntityStats playerStats;
+    public PlayerBattleEntityStats playerStats;
 
 }

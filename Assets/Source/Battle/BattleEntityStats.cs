@@ -1,20 +1,42 @@
 using System;
 
-public class BattleEntityStats
+public class PlayerBattleEntityStats
 {
     /*
-     * A dataclass for holding and manipulating entity data.
-     * Players and enemies will have their own.
+     * A dataclass for holding and manipulating player entity data.
      */
 
-    public int health = 10;
-    public int armor = 0;
+    public int lives = 9;   // start the player at 9 lives by default
+    public int balance = 0; // balance is like armor, depleted first before taking away a life (see battle design document)
 
-    public int redGems = 0;
-    public int blueGems = 0;
-    public int greenGems = 0;
+    // starting battle attributes (default at 1)
+    public int ferocity = 1;
+    public int stubborness = 1;
+    public int precision = 1;
+    public int agility = 1; 
 
+    public int gems = 0;
     public Amulet[] Amulets = Array.Empty<Amulet>();
     public Ability[] Abilities = Array.Empty<Ability>();
 
+    public PlayerBattleEntityStats(int startBalance, int startGems) {
+        balance = startBalance;
+        gems = startGems;
+    }
+}
+
+public class EnemyBattleEntityStats
+{
+    /*
+     * A dataclass for holding and manipulating enemy entity data.
+     */
+
+    public int health = 0;  
+
+    public int gems = 0;
+
+    public EnemyBattleEntityStats(int startHealth, int startGems) {
+        health = startHealth;
+        gems = startGems;
+    }
 }
