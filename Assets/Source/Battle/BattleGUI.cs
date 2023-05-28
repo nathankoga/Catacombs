@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class BattleGUI : MonoBehaviour, IGUIManager
 {
@@ -13,6 +14,11 @@ public class BattleGUI : MonoBehaviour, IGUIManager
     public TextMeshProUGUI battleStatsText;
     public TextMeshProUGUI battleAbilitiesText;
     public Canvas canvas;
+
+    public Button buttonOne;
+    public Button buttonTwo;
+    public Button buttonThree;
+    public Button buttonFour;
 
     public void Awake(){
         BattleManager.uiBattleUpdate += updateStats;

@@ -198,8 +198,10 @@ public class DungeonManager : MonoBehaviour, IManager
 
                         for (int row = -1; row < 2; row++){
                             for (int col = -1; col < 2; col++){
+
+                                // commented out for now: this leads to index errors 
                                 // set adjacent tiles to tiles that see the enemy at location enemyPos
-                                map[x + row, y + col].setAdjacentEnemy(enemyPos);
+                                // map[x + row, y + col].setAdjacentEnemy(enemyPos);
                                 // map[x + row, y + col].setAdjacentEnemy(map[x,y]);
                             }
                         }

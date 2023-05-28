@@ -72,7 +72,7 @@ public class BattleManager : MonoBehaviour, IManager
     public string[] getBattleText(){
         // returns an array of strings, each one associated to specific data to update in BattleGUI
         // battleText = ["player hp" "player def" "enemy hp" "enemy def" OPTIONAL"{placeholder for abilities}"]
-        string[] battleText = {"hp: 9", "defence: 10", "enemy hp: 5", "enemy defence: 5", "\tYour turn! \n (Press Space to Kill)"};
+        string[] battleText = {"hp: 9", "defence: 10", "enemy hp: 5", "enemy defence: 5", "\t\t\t  Your turn! \n \t\t    (Select a Move)"};
         return battleText;
     }
     /*
