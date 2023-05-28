@@ -21,6 +21,11 @@ public class MapTile : MonoBehaviour
 
     // Enemy at this tile?
     private bool hasEnemy = false;
+    private bool hasAdjEnemy= false;
+    private Vector2 adjEnemyLocation;
+    private MapTile adjEnemyTile;
+    
+    
     private GameObject enemyObject;
     private EnemyType enemyType;
 
@@ -58,7 +63,16 @@ public class MapTile : MonoBehaviour
     public bool hasAnEnemy(){
         return hasEnemy;
     }
+    
+    public bool adjacentToEnemy(){
+        return hasAdjEnemy;
 
+    }
+
+    public EnemyType returnEnemy(){
+        return this.enemyType;
+    }
+    
     public void SetEnemy(EnemyType enemyType)
     {
         this.enemyType = enemyType;
@@ -69,6 +83,16 @@ public class MapTile : MonoBehaviour
         enemyObject.transform.parent = this.transform;
         DungeonEnemy dungeonEnemy = enemyObject.GetComponent<DungeonEnemy>();
         dungeonEnemy.Initialize(this, enemyType);
+    }
+
+    public void setAdjacentEnemy(Vector2 enemyPos){
+    // public void setAdjacentEnemy(MapTile enemyTile){
+        // This tile is adjacent to an enemy:
+        // Therefore, when the player steps on this tile, trigger combat. 
+        // Figure this is cheaper than calculating neighbors after EVERY movement input.
+        hasAdjEnemy = true;
+        adjEnemyLocation = enemyPos;
+        // adjEnemyTile = enemyTile;
     }
 
     /*
@@ -107,10 +131,15 @@ public class MapTile : MonoBehaviour
         /*
          * Called when the Player lands on this tile.
          */
-        if (hasEnemy)
+        
+        if (hasEnemy )
         {
             // Start encounter.
             StartBattle(this, this.enemyType);
+        }
+        else if (hasAdjEnemy){
+
+        //     StartBattle(adjEnemyTile, adjEnemyTile.enemyType);
         }
     }
 

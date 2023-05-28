@@ -159,9 +159,6 @@ public class DungeonManager : MonoBehaviour, IManager
             }
         }
 
-        //map[4, 2].SetEnemy(EnemyType.Test);
-        //map[2, 3].SetEnemy(EnemyType.Test);
-
         // Initialize all tiles.
         for (int i = 0; i < mapSize; i++)
         {
@@ -185,20 +182,27 @@ public class DungeonManager : MonoBehaviour, IManager
 
         // spawn enemies in other rooms
         for (int idx = 1; idx < roomCount; idx++){
-            
             // random number of enemies (1~3)
             int numEnemies = Random.Range(1,4);
 
             for (int z = 0; z < numEnemies; z++){
-                
                 bool enemyNotPlaced = true;
+                
                 while (enemyNotPlaced){
                     Vector2Int enemyPos = rooms[idx].GetRandomInBounds();
                     int x = enemyPos.x; 
                     int y = enemyPos.y; 
-                    if (!map[x,y].hasAnEnemy()){
+                    if (!map[x,y].hasAnEnemy() && !map[x,y].adjacentToEnemy()){
                         map[x,y].SetEnemy(EnemyType.Test);
                         enemyNotPlaced = false;
+
+                        for (int row = -1; row < 2; row++){
+                            for (int col = -1; col < 2; col++){
+                                // set adjacent tiles to tiles that see the enemy at location enemyPos
+                                map[x + row, y + col].setAdjacentEnemy(enemyPos);
+                                // map[x + row, y + col].setAdjacentEnemy(map[x,y]);
+                            }
+                        }
                     }
                 }
             }

@@ -20,6 +20,11 @@ public class CameraLogic : MonoBehaviour
         }
     }
 
+
+    private void MoveToBattle(){
+        // possibly implement this
+    }
+
     /*
      * Positioning
      */

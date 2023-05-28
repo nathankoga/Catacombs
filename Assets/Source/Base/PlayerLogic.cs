@@ -95,10 +95,17 @@ public class PlayerLogic : MonoBehaviour
             if (newTile != null)
             {
                 if (newTile.CanMoveOnto()) {
+                    // before colliding into an enemy, initiate combat
+                    // if (newTile.hasAnEnemy()){
+                    //     newTile.OnStep(this);
+                    // }
+                    // else{
                     moveSound.Play();
                     tilePosition = newPos;
                     newTile.OnStep(this);
+                    // }
                 }
+
             }
         }
     }
