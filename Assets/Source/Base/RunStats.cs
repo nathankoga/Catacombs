@@ -10,7 +10,7 @@ public class RunStats : MonoBehaviour
      * current floor, etc global "run" variables.
      */
 
-    public DungeonFloor currentFloor = DungeonFloor.FLOOR1;
+    public DungeonFloor currentFloor = DungeonFloor.FLOOR3;
     public PlayerBattleEntityStats playerStats;
 
 }

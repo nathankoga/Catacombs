@@ -187,6 +187,7 @@ public class DungeonManager : MonoBehaviour, IManager
 
             for (int z = 0; z < numEnemies; z++){
                 bool enemyNotPlaced = true;
+                int attempts = 5;
                 
                 while (enemyNotPlaced){
                     Vector2Int enemyPos = rooms[idx].GetRandomInBounds();
@@ -209,6 +210,9 @@ public class DungeonManager : MonoBehaviour, IManager
                             }
                         }
                     }
+
+                    attempts -= 1;
+                    if (attempts < 0) break;
                 }
             }
         }
