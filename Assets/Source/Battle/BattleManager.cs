@@ -45,8 +45,11 @@ public class BattleManager : MonoBehaviour, IManager
 
     void EngageBattle(MapTile mapTile, EnemyType enemyType)
     {
+        // 'this' keyword for clarity when passing different variables of same name around
         this.mapTile = mapTile;
         this.enemyType = enemyType;
+        GameObject enemy = this.mapTile.referenceEnemyObject();
+        enemy.GetComponentInChildren<MeshRenderer>().material.color = Color.cyan;
         gameState.RequestManager(this);
     }
 
