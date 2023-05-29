@@ -201,8 +201,11 @@ public class DungeonManager : MonoBehaviour, IManager
 
                                 // commented out for now: this leads to index errors 
                                 // set adjacent tiles to tiles that see the enemy at location enemyPos
-                                // map[x + row, y + col].setAdjacentEnemy(enemyPos);
-                                // map[x + row, y + col].setAdjacentEnemy(map[x,y]);
+                                if (( 0 < x && x < mapSize -2 ) && (0 < y && y < mapSize -2)){
+                                    // for valid positions, set the tile s.t. it has an adjacent enemy  (this prevent indexing errors)
+                                    // map[x + row, y + col].setAdjacentEnemy(enemyPos);
+                                    map[x + row, y + col].setAdjacentEnemy(map[x,y]);
+                                } 
                             }
                         }
                     }

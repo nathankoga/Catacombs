@@ -69,8 +69,8 @@ public class MapTile : MonoBehaviour
 
     }
 
-    public EnemyType returnEnemy(){
-        return this.enemyType;
+    public GameObject referenceEnemyObject(){
+        return enemyObject;
     }
     
     public void SetEnemy(EnemyType enemyType)
@@ -85,14 +85,15 @@ public class MapTile : MonoBehaviour
         dungeonEnemy.Initialize(this, enemyType);
     }
 
-    public void setAdjacentEnemy(Vector2 enemyPos){
-    // public void setAdjacentEnemy(MapTile enemyTile){
+    // public void setAdjacentEnemy(Vector2 enemyPos){
+    public void setAdjacentEnemy(MapTile enemyTile){
+    // public void setAdjacentEnemy(Gameobject enemyTile){
         // This tile is adjacent to an enemy:
         // Therefore, when the player steps on this tile, trigger combat. 
         // Figure this is cheaper than calculating neighbors after EVERY movement input.
         hasAdjEnemy = true;
-        adjEnemyLocation = enemyPos;
-        // adjEnemyTile = enemyTile;
+        // adjEnemyLocation = enemyPos;
+        adjEnemyTile = enemyTile;
     }
 
     /*
@@ -137,9 +138,10 @@ public class MapTile : MonoBehaviour
             // Start encounter.
             StartBattle(this, this.enemyType);
         }
-        else if (hasAdjEnemy){
-
-        //     StartBattle(adjEnemyTile, adjEnemyTile.enemyType);
+        else if (hasAdjEnemy && adjEnemyTile.hasAnEnemy()){
+            // pass in a reference to the tile that stores the enemy's data, and start the battle with that enemy
+            // if the enemy has already been beaten, we turn off the hasAnEnemy flag so that we dont continue to "enter battle" vs nothing 
+            StartBattle(adjEnemyTile, adjEnemyTile.enemyType);
         }
     }
 
