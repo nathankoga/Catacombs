@@ -22,8 +22,7 @@ public class DungeonManager : MonoBehaviour, IManager
     public PlayerLogic player;
 
     // current map stats: Might want to refactor when we make new dungeons??
-    static int mapSize = 25;
-    static int roomCount = 7;
+    static int cachedMapSize;
     static int minRoomSize = 3;
     static int maxRoomSize = 5;
 
@@ -31,6 +30,8 @@ public class DungeonManager : MonoBehaviour, IManager
     public GameObject TilePrefab;
     static float xTileOffset = 5.0f;
     static float yTileOffset = 5.0f;
+
+    public DungeonFloor floor;
 
     // Game Events
     public delegate void DungeonGeneratedAction(MapTile[,] map, int mapSize);
@@ -69,8 +70,27 @@ public class DungeonManager : MonoBehaviour, IManager
     static public MapTile GetTileAtPos(Vector2 tilePosition)
     {
         if (tilePosition.x < 0 || tilePosition.y < 0) { return null; }
-        if (tilePosition.x >= mapSize || tilePosition.y >= mapSize) { return null; }
+        if (tilePosition.x >= cachedMapSize || tilePosition.y >= cachedMapSize) { return null; }
         return map[(int)tilePosition.x, (int)tilePosition.y];
+    }
+
+    /*
+     * Dungeon Consts
+     */
+
+    int GetRoomCount()
+    {
+        if (floor == DungeonFloor.FLOOR2) return 8;
+        if (floor == DungeonFloor.FLOOR3) return 11;
+        return 5;
+    }
+
+    int GetMapSize()
+    {
+        if (floor == DungeonFloor.FLOOR2) return 25;
+        if (floor == DungeonFloor.FLOOR3) return 30;
+        return 20;
+
     }
 
     /*
@@ -80,6 +100,9 @@ public class DungeonManager : MonoBehaviour, IManager
     void GenerateDungeon(GameState gs, DungeonFloor f)
     {
         // Generate bare map grid.
+        floor = f;
+        int mapSize = GetMapSize();
+        cachedMapSize = mapSize;
         map = new MapTile[mapSize, mapSize];
         
         for (int i = 0; i < mapSize; i++){            
@@ -94,6 +117,7 @@ public class DungeonManager : MonoBehaviour, IManager
                 map[i,j] = currTile.GetComponent<MapTile>();
 
                 // Initialize this tile.
+                map[i, j].floor = floor;
                 map[i, j].isGround = false;
             }
         }
@@ -107,6 +131,7 @@ public class DungeonManager : MonoBehaviour, IManager
         // for now, a quick representation of room placements in map as int vectors  
 
         // hacky constructor because idk how to init objects in C# 
+        int roomCount = GetRoomCount();
         roomManager.initRoomManager(mapSize, roomCount, minRoomSize, maxRoomSize); 
         
         roomManager.setRooms();  // don't know how setRooms will work when generating mutliple floors??
@@ -156,10 +181,39 @@ public class DungeonManager : MonoBehaviour, IManager
                 Vector2Int curr = path[j];
                 MapTile t = map[curr.x, curr.y];
                 t.isPath = true;
+
+                // In Floor 2/3, the path is also the ground.
+                if (floor != DungeonFloor.FLOOR1)
+                    t.isGround = true;
+
+                // In floor 2, adjacent tiles become ground.
+                if (floor == DungeonFloor.FLOOR2)
+                {
+                    int x = curr.x;
+                    int y = curr.y;
+                    if (x != 0) map[x - 1, y].isGround = true;
+                    if (x != (mapSize - 1)) map[x + 1, y].isGround = true;
+                    if (y != 0) map[x, y - 1].isGround = true;
+                    if (y != (mapSize - 1)) map[x, y + 1].isGround = true;
+                }
             }
         }
 
-        // Initialize all tiles.
+        // In floor 2, spawn a full gravel ring around the dungeon.
+        if (floor == DungeonFloor.FLOOR2)
+        {
+            for (int i = 0; i < mapSize; i++)
+            {
+                for (int j = 0; j < mapSize; j++)
+                {
+                    if ((i != 0) && (i != (mapSize - 1)) && (j != 0) && (j != (mapSize - 1)))
+                        continue;
+                    map[i, j].isGround = true;
+                }
+            }
+        }
+
+                // Initialize all tiles.
         for (int i = 0; i < mapSize; i++)
         {
             for (int j = 0; j < mapSize; j++)

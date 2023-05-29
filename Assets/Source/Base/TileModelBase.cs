@@ -10,6 +10,6 @@ public abstract class TileModelBase : MonoBehaviour
     {
         mapTile.RegisterTileModel(this);
     }
-    abstract public bool CanInitialize();
+    abstract public bool CanInitialize(DungeonFloor floor);
     abstract public void Initialize();
 }

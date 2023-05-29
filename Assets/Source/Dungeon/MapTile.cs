@@ -11,9 +11,11 @@ public class MapTile : MonoBehaviour
 
     public GameObject EnemyPrefab;
 
+    public DungeonFloor floor;
     public bool isWall;
     public bool isGround;
     public bool isPath;
+    public bool isExit;
 
     public Vector2 tilePos;
     public List<TileModelBase> tileModels;
@@ -49,7 +51,7 @@ public class MapTile : MonoBehaviour
         // Initialize all tile children.
         foreach (var tileModel in tileModels)
         {
-            if (tileModel.CanInitialize())
+            if (tileModel.CanInitialize(floor))
             {
                 tileModel.Initialize();
             } else

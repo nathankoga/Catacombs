@@ -6,7 +6,7 @@ using static UnityEngine.UI.GridLayoutGroup;
 
 public abstract class PathModelBase : TileModelBase
 {
-    public override bool CanInitialize()
+    public override bool CanInitialize(DungeonFloor floor)
     {
         return this.mapTile.isPath = true;
     }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BaseForest : TileModelBase
 {
-    public override bool CanInitialize()
+    public override bool CanInitialize(DungeonFloor floor)
     {
-        return mapTile.isGround;
+        return mapTile.isGround && (floor == DungeonFloor.FLOOR1) && (!mapTile.isExit);
     }
     public override void Initialize()
     {
