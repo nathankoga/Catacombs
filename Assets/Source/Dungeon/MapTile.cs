@@ -85,15 +85,12 @@ public class MapTile : MonoBehaviour
         dungeonEnemy.Initialize(this, enemyType);
     }
 
-    // public void setAdjacentEnemy(Vector2 enemyPos){
     public void setAdjacentEnemy(MapTile enemyTile){
-    // public void setAdjacentEnemy(Gameobject enemyTile){
         // This tile is adjacent to an enemy:
         // Therefore, when the player steps on this tile, trigger combat. 
         // Figure this is cheaper than calculating neighbors after EVERY movement input.
         hasAdjEnemy = true;
-        // adjEnemyLocation = enemyPos;
-        adjEnemyTile = enemyTile;
+        adjEnemyTile = enemyTile;  // set reference to MapTile object that has enemy on it
     }
 
     /*
