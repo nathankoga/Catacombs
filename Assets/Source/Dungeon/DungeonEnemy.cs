@@ -5,7 +5,7 @@ public class DungeonEnemy : MonoBehaviour
     /*
      * This class has the logic for an enemy represented on a dungeon tile.
      */
-
+    public EnemyBattleEntityStats statblock;
     public Vector3 worldOffset;
 
     GameObject selfRefObject;

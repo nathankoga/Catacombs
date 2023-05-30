@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class PlayerBattleEntityStats
 {
@@ -21,22 +22,6 @@ public class PlayerBattleEntityStats
 
     public PlayerBattleEntityStats(int startBalance, int startGems) {
         balance = startBalance;
-        gems = startGems;
-    }
-}
-
-public class EnemyBattleEntityStats
-{
-    /*
-     * A dataclass for holding and manipulating enemy entity data.
-     */
-
-    public int health = 0;  
-
-    public int gems = 0;
-
-    public EnemyBattleEntityStats(int startHealth, int startGems) {
-        health = startHealth;
         gems = startGems;
     }
 }
