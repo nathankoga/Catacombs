@@ -13,7 +13,9 @@ public class DungeonManager : MonoBehaviour, IManager
      * (This class exists between floor changes.)
      */
 
+    public MusicService musicService;
     public DungeonGUI GUI;
+    static public GameObject[,] gomap = null;
     static public MapTile[,] map;  // [,] initializes a 2D array of map tiles
     public RoomManager roomManager;   
     public List<Room> rooms;
@@ -32,6 +34,7 @@ public class DungeonManager : MonoBehaviour, IManager
     static float yTileOffset = 5.0f;
 
     public DungeonFloor floor;
+    public GameState gs;
 
     // Game Events
     public delegate void DungeonGeneratedAction(MapTile[,] map, int mapSize);
@@ -99,11 +102,24 @@ public class DungeonManager : MonoBehaviour, IManager
 
     void GenerateDungeon(GameState gs, DungeonFloor f)
     {
+        // Clean up old maptiles.
+        if (gomap != null)
+        {
+            for (int i = 0; i < cachedMapSize; i++)
+            {
+                for (int j = 0; j < cachedMapSize; j++)
+                {
+                    Destroy(gomap[i, j]);
+                }
+            }
+        }
+
         // Generate bare map grid.
         floor = f;
         int mapSize = GetMapSize();
         cachedMapSize = mapSize;
         map = new MapTile[mapSize, mapSize];
+        gomap = new GameObject[mapSize, mapSize];
         
         for (int i = 0; i < mapSize; i++){            
             for (int j = 0; j < mapSize; j++){
@@ -114,6 +130,7 @@ public class DungeonManager : MonoBehaviour, IManager
                 currTile.transform.parent = dungeonParent.transform;
 
                 // Store MapTile script.
+                gomap[i, j] = currTile;
                 map[i,j] = currTile.GetComponent<MapTile>();
 
                 // Initialize this tile.
@@ -213,7 +230,18 @@ public class DungeonManager : MonoBehaviour, IManager
             }
         }
 
-                // Initialize all tiles.
+        // Random room has an exit point at its origin.
+        if (floor != DungeonFloor.FLOOR3)
+        {
+            int randomRoomIndex = Random.Range(1, rooms.Count);
+            Room exitRoom = rooms[randomRoomIndex];
+            Vector2Int exitPos = exitRoom.GetRandomInBounds();
+            map[exitPos.x, exitPos.y].isExit = true;
+            map[exitPos.x, exitPos.y].isPath = false;
+            map[exitPos.x, exitPos.y].isGround = true;
+        }
+
+        // Initialize all tiles.
         for (int i = 0; i < mapSize; i++)
         {
             for (int j = 0; j < mapSize; j++)
@@ -226,7 +254,7 @@ public class DungeonManager : MonoBehaviour, IManager
                     (i != (mapSize - 1)) ? (map[i + 1, j]) : (null),
                     (i != 0) ? (map[i - 1, j]) : (null)
                 };
-                map[i, j].Initialize(new Vector2(i, j), adjacentTiles);
+                map[i, j].Initialize(new Vector2(i, j), adjacentTiles, gs);
             }
         }
 
@@ -266,6 +294,7 @@ public class DungeonManager : MonoBehaviour, IManager
             if (idx == boss_room_idx){
                 continue;
             }
+            break;  // todo remove this break
             int numEnemies = Random.Range(2,4);
 
             for (int z = 0; z < numEnemies; z++){
@@ -299,8 +328,9 @@ public class DungeonManager : MonoBehaviour, IManager
                 }
             }
         }
-        
+
         // Send dungeon generated event.
+        musicService.RequestFloorTheme(floor);
         DungeonGenerated(map, mapSize);
     }
 }

@@ -30,6 +30,7 @@ public class MapTile : MonoBehaviour
     
     private GameObject enemyObject;
     private EnemyType enemyType;
+    private GameState gs;
 
     private void Awake()
     {
@@ -40,11 +41,12 @@ public class MapTile : MonoBehaviour
      * Configuration Methods
      */
 
-    public void Initialize(Vector2 tilePos, List<MapTile> adjacentTiles)
+    public void Initialize(Vector2 tilePos, List<MapTile> adjacentTiles, GameState gs)
     {
         /*
          * Called by the DungeonManager after the Tile's options are fully configured.
          */
+        this.gs = gs;
         this.tilePos = tilePos;
         this.adjacentTiles = adjacentTiles;
 
@@ -141,6 +143,13 @@ public class MapTile : MonoBehaviour
             // pass in a reference to the tile that stores the enemy's data, and start the battle with that enemy
             // if the enemy has already been beaten, we turn off the hasAnEnemy flag so that we dont continue to "enter battle" vs nothing 
             StartBattle(adjEnemyTile, adjEnemyTile.enemyType);
+        }
+
+        // If this is an exit, trigger the next floor.
+        // TODO : affirm that the player has deleted the boss
+        if (isExit && true)
+        {
+            gs.RequestManager(gs.stageTransitionManager);
         }
     }
 

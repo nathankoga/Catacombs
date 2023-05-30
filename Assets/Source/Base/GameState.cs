@@ -18,6 +18,7 @@ public class GameState : MonoBehaviour
     public RunStats runStats;
     public BattleManager battleManager;
     public DungeonManager dungeonManager;
+    public StageTransitionManager stageTransitionManager;
 
     // Game Manager State
     static protected IManager ActiveManager = null;
@@ -48,5 +49,16 @@ public class GameState : MonoBehaviour
     static public ManagerType GetManagerType()
     {
         return ActiveManager.GetManagerType();
+    }
+
+    public void GotoNextFloor()
+    {
+        DungeonFloor nextFloor = DungeonFloor.FLOOR1;
+        if (runStats.currentFloor == DungeonFloor.FLOOR1) nextFloor = DungeonFloor.FLOOR2;
+        else if (runStats.currentFloor == DungeonFloor.FLOOR2) nextFloor = DungeonFloor.FLOOR3;
+        else return;
+        runStats.currentFloor = nextFloor;
+        FloorStart(this, nextFloor);
+        RequestManager(dungeonManager);
     }
 }
