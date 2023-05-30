@@ -8,13 +8,14 @@ public class DungeonEnemy : MonoBehaviour
 
     public Vector3 worldOffset;
 
+    GameObject selfRefObject;
+
     private MapTile mapTile;
     private EnemyType enemyType;
 
     private int health;
     private int damage;
 
-    private int isBoss;  // possible tag (might be unecessary if we use enemyType enum)
 
     // private int gems = 0;  // possible later mechanic?    
 
@@ -25,11 +26,20 @@ public class DungeonEnemy : MonoBehaviour
         this.mapTile = mapTile;
         this.enemyType = enemyType;
 
+        selfRefObject = this.mapTile.referenceEnemyObject();
         //this.health = health;
         //this.damage = damage;
 
         // Set positioning.
         LerpToWorldPos(1.0f);
+
+        if (enemyType == EnemyType.Floor1Boss){
+            
+            // set color to black
+            selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.magenta;
+            // set size to be a bit taller
+            selfRefObject.gameObject.transform.localScale += new Vector3(1, 3, 1);
+        }
     }
 
     private void LerpToWorldPos(float t)

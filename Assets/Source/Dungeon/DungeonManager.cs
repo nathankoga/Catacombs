@@ -234,10 +234,39 @@ public class DungeonManager : MonoBehaviour, IManager
         Vector2Int playerPos = rooms[0].GetRandomInBounds();
         player.SetPosition((Vector2)playerPos);
 
+        // before spawning enemies in other rooms, pick room (approx.) farthest from spawn, to place boss 
+        int boss_room_idx = 0;
+        float boss_room_dist = 0;
+
+        for (int idx = 1; idx < roomCount; idx++){
+            float dist = Vector2.Distance(playerPos, rooms[idx].GetRandomInBounds());
+            if (dist > boss_room_dist){
+                boss_room_dist = dist;
+                boss_room_idx = idx;
+            }
+        }
+        
+        // Boss spawn
+        Vector2Int bossPos = rooms[boss_room_idx].GetRandomInBounds();
+        int bx = bossPos.x;
+        int by = bossPos.y;
+        map[bx,by].SetEnemy(EnemyType.Floor1Boss);
+        for (int row = -1; row < 2; row++){
+            for (int col = -1; col < 2; col++){
+                if (( 0 < bx && bx < mapSize -2 ) && (0 < by && by < mapSize -2)){
+                    map[bx + row, by + col].setAdjacentEnemy(map[bx,by]);
+                } 
+            }
+        }
+
+        
         // spawn enemies in other rooms
         for (int idx = 1; idx < roomCount; idx++){
-            // random number of enemies (1~3)
-            int numEnemies = Random.Range(1,4);
+            // random number of enemies (2~3)
+            if (idx == boss_room_idx){
+                continue;
+            }
+            int numEnemies = Random.Range(2,4);
 
             for (int z = 0; z < numEnemies; z++){
                 bool enemyNotPlaced = true;
