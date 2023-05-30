@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ManagerType { BATTLE, DUNGEON };
+public enum ManagerType { BATTLE, DUNGEON, LEVELTRANSITION };
 
 public interface IManager
 {
