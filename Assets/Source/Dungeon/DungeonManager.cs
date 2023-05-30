@@ -44,6 +44,7 @@ public class DungeonManager : MonoBehaviour, IManager
     void Awake()
     {
         GameState.FloorStart += GenerateDungeon;
+        player.bossDefeated = false;  // new floor, so reset boss flag
     }
 
     public void StartManager()
@@ -278,7 +279,7 @@ public class DungeonManager : MonoBehaviour, IManager
         Vector2Int bossPos = rooms[boss_room_idx].GetRandomInBounds();
         int bx = bossPos.x;
         int by = bossPos.y;
-        map[bx,by].SetEnemy(EnemyType.Floor1Boss);
+        map[bx,by].SetEnemy(EnemyType.FloorBoss);
         for (int row = -1; row < 2; row++){
             for (int col = -1; col < 2; col++){
                 if (( 0 < bx && bx < mapSize -2 ) && (0 < by && by < mapSize -2)){
@@ -294,7 +295,7 @@ public class DungeonManager : MonoBehaviour, IManager
             if (idx == boss_room_idx){
                 continue;
             }
-            break;  // todo remove this break
+            break;  // todo remove this break (just for toggling enemy spawns)
             int numEnemies = Random.Range(2,4);
 
             for (int z = 0; z < numEnemies; z++){

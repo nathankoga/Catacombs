@@ -25,6 +25,8 @@ public class PlayerLogic : MonoBehaviour
     public InputAction moveAction;
     public AudioSource moveSound;
 
+    public bool bossDefeated;
+
     // storing player data into this class as well
     // nevermind, RunStats.cs curently imports player stats from BattleEntityStats.cs
     // of course we can change this around 
@@ -111,15 +113,9 @@ public class PlayerLogic : MonoBehaviour
             if (newTile != null)
             {
                 if (newTile.CanMoveOnto()) {
-                    // before colliding into an enemy, initiate combat
-                    // if (newTile.hasAnEnemy()){
-                    //     newTile.OnStep(this);
-                    // }
-                    // else{
                     moveSound.Play();
                     tilePosition = newPos;
                     newTile.OnStep(this);
-                    // }
                 }
 
             }

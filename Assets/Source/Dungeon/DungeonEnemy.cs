@@ -33,7 +33,7 @@ public class DungeonEnemy : MonoBehaviour
         // Set positioning.
         LerpToWorldPos(1.0f);
 
-        if (enemyType == EnemyType.Floor1Boss){
+        if (enemyType == EnemyType.FloorBoss){
             
             // set color to black
             selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.magenta;

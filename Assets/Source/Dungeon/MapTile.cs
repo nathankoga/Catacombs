@@ -9,6 +9,8 @@ public class MapTile : MonoBehaviour
     public delegate void StartBattleAction(MapTile mapTile, EnemyType enemyType);
     public static event StartBattleAction StartBattle;
 
+
+
     public GameObject EnemyPrefab;
 
     public DungeonFloor floor;
@@ -105,6 +107,12 @@ public class MapTile : MonoBehaviour
     {
         hasEnemy = false;
         Destroy(enemyObject);
+        
+        if (enemyType == EnemyType.FloorBoss){
+            // if we encounter boss, find reference to player GameObject, then set flag to true
+            GameObject player = GameObject.Find("Player");
+            player.GetComponent<PlayerLogic>().bossDefeated = true;
+        }
     }
 
     /*
@@ -147,7 +155,7 @@ public class MapTile : MonoBehaviour
 
         // If this is an exit, trigger the next floor.
         // TODO : affirm that the player has deleted the boss
-        if (isExit && true)
+        if (isExit && player.bossDefeated)
         {
             gs.RequestManager(gs.stageTransitionManager);
         }
