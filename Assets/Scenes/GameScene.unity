@@ -3302,6 +3302,7 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   moveSound: {fileID: 0}
+  bossDefeated: 0
 --- !u!82 &1664144008
 AudioSource:
   m_ObjectHideFlags: 0

@@ -19,7 +19,10 @@ public class EnemyBattleEntityStats : MonoBehaviour
 
     public int gems = 0;
 
-    public EnemyBattleEntityStats(int startHealth, int startGems)
+    // public EnemyBattleEntityStats(int startHealth, int startGems)
+    // Allegedly class constructors don't work for MonoBehaviour objects, therefore
+    // we change to an explicit constructor 
+    public void setEnemyBattleEntityStats(int startHealth, int startGems)
     {
         health = startHealth;
         gems = startGems;

@@ -29,6 +29,7 @@ public class BattleManager : MonoBehaviour, IManager
     bool battleActive = false;
     private MapTile mapTile;
     private EnemyType enemyType;
+    private GameObject enemyRef;
 
     // audio
     public AudioSource deathSound;
@@ -48,8 +49,8 @@ public class BattleManager : MonoBehaviour, IManager
         // 'this' keyword for clarity when passing different variables of same name around
         this.mapTile = mapTile;
         this.enemyType = enemyType;
-        GameObject enemy = this.mapTile.referenceEnemyObject();
-        enemy.GetComponentInChildren<MeshRenderer>().material.color = Color.cyan;
+        enemyRef = this.mapTile.referenceEnemyObject();
+        enemyRef.GetComponentInChildren<MeshRenderer>().material.color = Color.cyan;
         gameState.RequestManager(this);
     }
 
@@ -74,8 +75,17 @@ public class BattleManager : MonoBehaviour, IManager
 
     public string[] getBattleText(){
         // returns an array of strings, each one associated to specific data to update in BattleGUI
-        // battleText = ["player hp" "player def" "enemy hp" "enemy def" OPTIONAL"{placeholder for abilities}"]
-        string[] battleText = {"hp: 9", "defence: 10", "enemy hp: 5", "enemy defence: 5", "\t\t\t  Your turn! \n \t\t    (Select a Move)"};
+        // HARDCODED FIRST ATTEMPT:
+        // string[] battleText = {"hp: 9", "defence: 10", "enemy hp: 5", "enemy defence: 5", "\t\t\t  Your turn! \n \t\t    (Select a Move)"};
+
+        // DungeonEnemy is the reference to the enemy object, and EnemyBattleEntityStats holds a reference to it's battle data
+        // /*
+        string[] battleText = {"hp: 9", 
+                                "defence: 10",
+                                "enemy hp: " + enemyRef.GetComponent<EnemyBattleEntityStats>().health.ToString(),
+                                "enemy ferocity: " + enemyRef.GetComponent<EnemyBattleEntityStats>().ferocity.ToString(), 
+                                "\t\t\t  Your turn! \n \t\t    (Select a Move)"};
+        // */ 
         return battleText;
     }
     /*

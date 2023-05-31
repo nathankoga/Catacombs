@@ -8,18 +8,13 @@ public class DungeonEnemy : MonoBehaviour
     public EnemyBattleEntityStats statblock;
     public Vector3 worldOffset;
 
-    GameObject selfRefObject;
+    private GameObject selfRefObject;
 
     private MapTile mapTile;
     private EnemyType enemyType;
 
-    private int health;
-    private int damage;
-
-
     // private int gems = 0;  // possible later mechanic?    
 
-    // public void Initialize(MapTile mapTile, EnemyType enemyType, health, damage)
     public void Initialize(MapTile mapTile, EnemyType enemyType)
     {
         // Set enums.
@@ -27,15 +22,21 @@ public class DungeonEnemy : MonoBehaviour
         this.enemyType = enemyType;
 
         selfRefObject = this.mapTile.referenceEnemyObject();
-        //this.health = health;
-        //this.damage = damage;
+        
+        // statblock = selfRefObject.GetComponent<EnemyBattleEntityStats>();
+        // set the statblock values (hard-coded for now, but can set values differently based off of EnemyType enum)
+        
+        // statblock = new EnemyBattleEntityStats(); 
+        // this leads to "you are trying to create a monobehaviour using the 'new' keyword error 
+        statblock = selfRefObject.AddComponent<EnemyBattleEntityStats>();
+        statblock.setEnemyBattleEntityStats(10,10);
 
         // Set positioning.
         LerpToWorldPos(1.0f);
 
         if (enemyType == EnemyType.FloorBoss){
             
-            // set color to black
+            // set color to magenta 
             selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.magenta;
             // set size to be a bit taller
             selfRefObject.gameObject.transform.localScale += new Vector3(1, 3, 1);
