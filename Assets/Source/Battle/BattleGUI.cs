@@ -20,6 +20,36 @@ public class BattleGUI : MonoBehaviour, IGUIManager
     public Button buttonThree;
     public Button buttonFour;
 
+    public void Start() {
+        Button btn1 = buttonOne.GetComponent<Button>();
+        btn1.onClick.AddListener(buttonOneEffect);
+
+        Button btn2 = buttonTwo.GetComponent<Button>();
+        btn2.onClick.AddListener(buttonTwoEffect);
+        
+        Button btn3 = buttonThree.GetComponent<Button>();
+        btn3.onClick.AddListener(buttonThreeEffect);
+
+        Button btn4 = buttonFour.GetComponent<Button>();
+        btn4.onClick.AddListener(buttonFourEffect);
+    }
+
+    void buttonOneEffect() {
+        Debug.Log("You clicked button one\n");
+    }
+
+    void buttonTwoEffect() {
+        Debug.Log("You clicked button two\n");
+    }
+
+    void buttonThreeEffect() {
+        Debug.Log("You clicked button three\n");
+    }
+
+    void buttonFourEffect() {
+        Debug.Log("You clicked button four\n");
+    }
+
     public void Awake(){
         BattleManager.uiBattleUpdate += updateStats;
     }
