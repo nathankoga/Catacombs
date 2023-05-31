@@ -36,10 +36,12 @@ public class BattleGUI : MonoBehaviour, IGUIManager
 
     void buttonOneEffect() {
         Debug.Log("You clicked button one\n");
+        battleManager.DamageEnemy(1);
     }
 
     void buttonTwoEffect() {
         Debug.Log("You clicked button two\n");
+        battleManager.DamageEnemy(2);
     }
 
     void buttonThreeEffect() {

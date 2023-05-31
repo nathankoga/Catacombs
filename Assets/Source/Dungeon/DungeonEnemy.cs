@@ -13,7 +13,21 @@ public class DungeonEnemy : MonoBehaviour
     private MapTile mapTile;
     private EnemyType enemyType;
 
+    public int hp; // This reflects current hit points, it will be modified in combat and may reach zero
     // private int gems = 0;  // possible later mechanic?    
+
+    public int getHP()
+    {
+        return this.hp;
+    }
+    public void setHP(int newHP)
+    {
+        this.hp = newHP;
+    }
+    public void loseHP(int dmg)
+    {
+        this.hp -= dmg;
+    }
 
     public void Initialize(MapTile mapTile, EnemyType enemyType)
     {
@@ -31,7 +45,9 @@ public class DungeonEnemy : MonoBehaviour
         
         // NOTE: Using AddComponent<...>() initializes the script that we are attaching to DungeonEnemy
         statblock = selfRefObject.AddComponent<EnemyBattleEntityStats>();
-        statblock.setEnemyBattleEntityStats(10,10);
+        // statblock.setEnemyBattleEntityStats(10,10);
+        // Deprecated, use this 
+        this.hp = statblock.health;
 
         // Set positioning.
         LerpToWorldPos(1.0f);

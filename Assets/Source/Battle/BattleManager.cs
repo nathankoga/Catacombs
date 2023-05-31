@@ -27,6 +27,7 @@ public class BattleManager : MonoBehaviour, IManager
      */
 
     bool battleActive = false;
+    bool playerTurn = true;
     private MapTile mapTile;
     private EnemyType enemyType;
     private GameObject enemyRef;
@@ -66,10 +67,27 @@ public class BattleManager : MonoBehaviour, IManager
         uiBattleUpdate(getBattleText());
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // play enemy death sound
-            deathSound.Play();
-            mapTile.ClearEnemy();
-            gameState.RequestManager(dungeonManager);
+            WinBattle();
+        }
+    }
+
+    private void WinBattle()
+    {
+        // play enemy death sound
+        deathSound.Play();
+        mapTile.ClearEnemy();
+        gameState.RequestManager(dungeonManager);
+    }
+
+    /*
+     * Battle Effects
+     */
+    public void DamageEnemy(int dmg)
+    {
+        enemyRef.GetComponent<DungeonEnemy>().loseHP(dmg);
+        if (enemyRef.GetComponent<DungeonEnemy>().getHP() <= 0)
+        {
+            WinBattle();
         }
     }
 
@@ -80,10 +98,10 @@ public class BattleManager : MonoBehaviour, IManager
 
         // DungeonEnemy is the reference to the enemy object, and EnemyBattleEntityStats holds a reference to it's battle data
         // /*
-        string[] battleText = {"hp: 9", 
-                                "defence: 10",
-                                "enemy hp: " + enemyRef.GetComponent<EnemyBattleEntityStats>().health.ToString(),
-                                "enemy ferocity: " + enemyRef.GetComponent<EnemyBattleEntityStats>().ferocity.ToString(), 
+        string[] battleText = {"Enemy HP: " + enemyRef.GetComponent<DungeonEnemy>().getHP().ToString(), 
+                                "Enemy Maximum HP: " + enemyRef.GetComponent<EnemyBattleEntityStats>().health.ToString(), // TODO: fix bug causing unwanted newline here
+                                "",
+                                "", 
                                 "\t\t\t  Your turn! \n \t\t    (Select a Move)"};
         // */ 
         return battleText;

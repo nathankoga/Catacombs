@@ -404,6 +404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statblock: {fileID: 0}
   worldOffset: {x: 0, y: 0, z: 0}
+  hp: 0
 --- !u!4 &128948183
 Transform:
   m_ObjectHideFlags: 0
@@ -1513,7 +1514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74815aaa03d911a418139e2db964e9c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleManager: {fileID: 0}
+  battleManager: {fileID: 744055320}
   battleStatsText: {fileID: 409508216}
   battleAbilitiesText: {fileID: 367884305}
   canvas: {fileID: 1670071521}
