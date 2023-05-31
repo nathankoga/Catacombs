@@ -22,7 +22,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "",
                     "action": "Kill",
                     "isComposite": false,
                     "isPartOfComposite": false

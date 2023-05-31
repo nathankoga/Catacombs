@@ -45,9 +45,17 @@ public class DungeonEnemy : MonoBehaviour
         
         // NOTE: Using AddComponent<...>() initializes the script that we are attaching to DungeonEnemy
         statblock = selfRefObject.AddComponent<EnemyBattleEntityStats>();
-        // statblock.setEnemyBattleEntityStats(10,10);
         // Deprecated, use this 
-        this.hp = statblock.health;
+        
+        // NOTE: Commented out just for the game presentation (Hard-coding health values to start at 3)
+        // this.hp = statblock.health;
+        
+        if (enemyType == EnemyType.FloorBoss){
+            this.hp = 10;
+        }
+        else {
+            this.hp = 3;
+        }
 
         // Set positioning.
         LerpToWorldPos(1.0f);

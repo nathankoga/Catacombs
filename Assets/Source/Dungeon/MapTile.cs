@@ -26,7 +26,9 @@ public class MapTile : MonoBehaviour
     // Enemy at this tile?
     private bool hasEnemy = false;
     private bool hasAdjEnemy= false;
+    // private int numAdjEnemy= 0;
     private Vector2 adjEnemyLocation;
+    
     private MapTile adjEnemyTile;
     
     
@@ -142,7 +144,7 @@ public class MapTile : MonoBehaviour
          * Called when the Player lands on this tile.
          */
         
-        if (hasEnemy )
+        if (hasEnemy)
         {
             // Start encounter.
             StartBattle(this, this.enemyType);
@@ -151,6 +153,11 @@ public class MapTile : MonoBehaviour
             // pass in a reference to the tile that stores the enemy's data, and start the battle with that enemy
             // if the enemy has already been beaten, we turn off the hasAnEnemy flag so that we dont continue to "enter battle" vs nothing 
             StartBattle(adjEnemyTile, adjEnemyTile.enemyType);
+           
+
+            // // because tiles may have multiple neighbor enemies, change to a list of tiles with enemies on them so that we can continue to collide
+            // MapTile poppedTile = adjEnemyTiles.Pop();
+            // StartBattle(poppedTile, poppedTile.enemyType);
         }
 
         // If this is an exit, trigger the next floor.

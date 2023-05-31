@@ -295,7 +295,7 @@ public class DungeonManager : MonoBehaviour, IManager
             if (idx == boss_room_idx){
                 continue;
             }
-            break;  // todo remove this break (just for toggling enemy spawns)
+            // break;  // todo remove this break (just for toggling enemy spawns)
             int numEnemies = Random.Range(2,4);
 
             for (int z = 0; z < numEnemies; z++){
@@ -306,14 +306,15 @@ public class DungeonManager : MonoBehaviour, IManager
                     Vector2Int enemyPos = rooms[idx].GetRandomInBounds();
                     int x = enemyPos.x; 
                     int y = enemyPos.y; 
+                    
                     if (!map[x,y].hasAnEnemy() && !map[x,y].adjacentToEnemy()){
+                    // if (!map[x,y].hasAnEnemy() && !map[x,y].adjacentToEnemy() && adjacentNoEnemies(x,y)){
                         map[x,y].SetEnemy(EnemyType.Test);
                         enemyNotPlaced = false;
 
                         for (int row = -1; row < 2; row++){
                             for (int col = -1; col < 2; col++){
 
-                                // commented out for now: this leads to index errors 
                                 // set adjacent tiles to tiles that see the enemy at location enemyPos
                                 if (( 0 < x && x < mapSize -2 ) && (0 < y && y < mapSize -2)){
                                     // for valid positions, set the tile s.t. it has an adjacent enemy  (this prevent indexing errors)
@@ -333,6 +334,20 @@ public class DungeonManager : MonoBehaviour, IManager
         // Send dungeon generated event.
         musicService.RequestFloorTheme(floor);
         DungeonGenerated(map, mapSize);
+    }
+
+    bool adjacentNoEnemies(int x, int y){
+        int mapSize = GetMapSize();
+        for (int row = -1; row < 2; row++){
+            for (int col = -1; col < 2; col++){
+                if (( 0 < x && x < mapSize -2 ) && (0 < y && y < mapSize -2)){
+                    if (map[x + row, y+col].adjacentToEnemy()){
+                        return false;
+                    }
+                }
+            }
+        }
+    return true;
     }
 }
 
