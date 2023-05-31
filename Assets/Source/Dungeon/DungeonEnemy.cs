@@ -28,6 +28,8 @@ public class DungeonEnemy : MonoBehaviour
         
         // statblock = new EnemyBattleEntityStats(); 
         // this leads to "you are trying to create a monobehaviour using the 'new' keyword error 
+        
+        // NOTE: Using AddComponent<...>() initializes the script that we are attaching to DungeonEnemy
         statblock = selfRefObject.AddComponent<EnemyBattleEntityStats>();
         statblock.setEnemyBattleEntityStats(10,10);
 
