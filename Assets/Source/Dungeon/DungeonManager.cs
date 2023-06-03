@@ -280,6 +280,7 @@ public class DungeonManager : MonoBehaviour, IManager
         int bx = bossPos.x;
         int by = bossPos.y;
         map[bx,by].SetEnemy(EnemyType.FloorBoss);
+        player.bossDefeated = false;  // flag not getting reset in the awake() function
         for (int row = -1; row < 2; row++){
             for (int col = -1; col < 2; col++){
                 if (( 0 < bx && bx < mapSize -2 ) && (0 < by && by < mapSize -2)){
