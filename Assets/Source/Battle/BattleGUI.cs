@@ -19,6 +19,7 @@ public class BattleGUI : MonoBehaviour, IGUIManager
     public Button buttonTwo;
     public Button buttonThree;
     public Button buttonFour;
+    public Button buttonFive;
 
     public void Start() {
         Button btn1 = buttonOne.GetComponent<Button>();
@@ -32,6 +33,9 @@ public class BattleGUI : MonoBehaviour, IGUIManager
 
         Button btn4 = buttonFour.GetComponent<Button>();
         btn4.onClick.AddListener(buttonFourEffect);
+        
+        Button btn5 = buttonFive.GetComponent<Button>();
+        btn5.onClick.AddListener(buttonFiveEffect);
     }
 
     void buttonOneEffect() {
@@ -50,6 +54,10 @@ public class BattleGUI : MonoBehaviour, IGUIManager
 
     void buttonFourEffect() {
         Debug.Log("You clicked button four\n");
+    }
+    
+    void buttonFiveEffect() {
+        Debug.Log("You clicked button five\n");
     }
 
     public void Awake(){
