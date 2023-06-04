@@ -11,9 +11,14 @@ public class BattleGUI : MonoBehaviour, IGUIManager
      */
 
     public BattleManager battleManager;
-    public TextMeshProUGUI battleStatsText;
+    public TextMeshProUGUI enemyStatsText;
     public TextMeshProUGUI battleAbilitiesText;
     public Canvas canvas;
+
+    public HealthBar healthBar;    
+    public BalanceBar balanceBar;    
+    public ExpBar expBar;    
+
 
     public Button buttonOne;
     public Button buttonTwo;
@@ -65,8 +70,20 @@ public class BattleGUI : MonoBehaviour, IGUIManager
     }
 
     public void updateStats(string[] stats){
-        battleStatsText.text = stats[0] + "\n" + stats[1] + "\n" + stats[2] + "\n" + stats[3];
-        battleAbilitiesText.text = stats[4];
+
+        // int.parse casts string to int
+        // seems very wasteful to have to set max balance each time, so we might fix later
+        
+        healthBar.SetHealth( int.Parse(stats[0]));
+        balanceBar.SetMaxBalance( int.Parse(stats[1]));
+        balanceBar.SetBalance( int.Parse(stats[2]));
+        expBar.SetMaxExp( int.Parse(stats[3]));
+        expBar.SetExp( int.Parse(stats[4]));
+
+
+        enemyStatsText.text =  stats[5] ;
+        // enemyStatsText.text = stats[0] + "\n" + stats[1] + "\n" + stats[2] + "\n" + stats[3];
+        // battleAbilitiesText.text = stats[4];
     }
 
     public void EnableGUI()

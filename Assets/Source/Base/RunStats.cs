@@ -13,4 +13,12 @@ public class RunStats : MonoBehaviour
     public DungeonFloor currentFloor = DungeonFloor.FLOOR3;
     public PlayerBattleEntityStats playerStats;
 
+
+    void Start(){
+        playerStats = new PlayerBattleEntityStats(9, 0);
+    }
+
+    PlayerBattleEntityStats get_stats(){
+        return playerStats;
+    }
 }

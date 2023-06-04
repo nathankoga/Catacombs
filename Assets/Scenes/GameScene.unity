@@ -1087,7 +1087,7 @@ GameObject:
   - component: {fileID: 409508217}
   - component: {fileID: 409508216}
   m_Layer: 5
-  m_Name: CurrentStats
+  m_Name: EnemyStats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1336,8 +1336,9 @@ GameObject:
   m_Component:
   - component: {fileID: 418524572}
   - component: {fileID: 418524573}
+  - component: {fileID: 418524574}
   m_Layer: 5
-  m_Name: ArmorBar
+  m_Name: BalanceBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1417,6 +1418,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &418524574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418524571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 678b42849bae70e488284396020a2a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  balanceSlider: {fileID: 418524573}
+  balanceText: {fileID: 1503674010}
 --- !u!1 &423912154
 GameObject:
   m_ObjectHideFlags: 0
@@ -1758,9 +1773,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 744055320}
-  battleStatsText: {fileID: 409508216}
+  enemyStatsText: {fileID: 409508216}
   battleAbilitiesText: {fileID: 367884305}
   canvas: {fileID: 1670071521}
+  healthBar: {fileID: 1436042459}
+  balanceBar: {fileID: 418524574}
+  expBar: {fileID: 2080351039}
   buttonOne: {fileID: 476998632}
   buttonTwo: {fileID: 1936588701}
   buttonThree: {fileID: 1044632713}
@@ -1854,7 +1872,7 @@ GameObject:
   - component: {fileID: 504535849}
   - component: {fileID: 504535848}
   m_Layer: 5
-  m_Name: CurrentArmor
+  m_Name: CurrentBalance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2165,7 +2183,7 @@ GameObject:
   - component: {fileID: 719189478}
   - component: {fileID: 719189477}
   m_Layer: 5
-  m_Name: StatsUI
+  m_Name: EnemyStatsUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2279,6 +2297,7 @@ MonoBehaviour:
   gameState: {fileID: 256666352}
   dungeonManager: {fileID: 2013998555}
   GUI: {fileID: 491413521}
+  runStats: {fileID: 1441091959}
   deathSound: {fileID: 0}
 --- !u!82 &744055321
 AudioSource:
@@ -3957,6 +3976,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1436042457}
   - component: {fileID: 1436042458}
+  - component: {fileID: 1436042459}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -4038,6 +4058,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1436042459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436042456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8bfa915ba12d4141a3122e223bccca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSlider: {fileID: 1436042458}
+  healthText: {fileID: 1115627985}
 --- !u!1 &1441091957
 GameObject:
   m_ObjectHideFlags: 0
@@ -4095,7 +4129,7 @@ GameObject:
   - component: {fileID: 1447419542}
   - component: {fileID: 1447419541}
   m_Layer: 5
-  m_Name: ArmorBorder
+  m_Name: BalanceBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4171,7 +4205,7 @@ GameObject:
   - component: {fileID: 1503674011}
   - component: {fileID: 1503674010}
   m_Layer: 5
-  m_Name: ArmorText
+  m_Name: BalanceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4549,7 +4583,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670071517}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -5189,6 +5223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2080351037}
   - component: {fileID: 2080351038}
+  - component: {fileID: 2080351039}
   m_Layer: 5
   m_Name: ExpBar
   m_TagString: Untagged
@@ -5270,6 +5305,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2080351039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080351036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b6ebcac0d4b5d04b9ac9709f96768f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expSlider: {fileID: 2080351038}
+  expText: {fileID: 536895398}
 --- !u!1 &2101417406
 GameObject:
   m_ObjectHideFlags: 0

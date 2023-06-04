@@ -27,21 +27,9 @@ public class PlayerLogic : MonoBehaviour
 
     public bool bossDefeated;
 
-    // storing player data into this class as well
-    // nevermind, RunStats.cs curently imports player stats from BattleEntityStats.cs
-    // of course we can change this around 
-    // private int lives = 9;
-    // private int balance = 0;
-    // private int ferocity = 1;
-    // private int stubbornness = 1;
-    // private int precision = 1;
-    // private int grace = 1;
-    // private int gems = 0;
-
-
-    // new abilities may be difficult to implement in a timely manner 
-    // private Amulet[] Amulets = Array.Empty<Amulet>();
-    // private Ability[] Abilities = Array.Empty<Ability>();
+    
+    // RunStats.cs curently imports player stats from BattleEntityStats.cs
+    
 
     private void Start()
     {
