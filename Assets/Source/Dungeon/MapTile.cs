@@ -24,7 +24,6 @@ public class MapTile : MonoBehaviour
     // Enemy at this tile?
     private bool hasEnemy = false;
     private bool hasAdjEnemy= false;
-    private int adjEnemyCount= 0;
 
     private Vector2 adjEnemyLocation;
     
@@ -92,12 +91,10 @@ public class MapTile : MonoBehaviour
         dungeonEnemy.Initialize(this, enemyType);
     }
 
-    public void setAdjacentEnemy(MapTile enemyTile){
-        // This tile is adjacent to an enemy:
-        // Therefore, when the player steps on this tile, trigger combat. 
-        // Figure this is cheaper than calculating neighbors after EVERY movement input.
+    public void setAdjacentEnemy(){
+        // This tile is/was adjacent to an enemy
+        // used to save a location, is now a flag that simply implies an enemy is/was adjacent
         hasAdjEnemy = true;
-        adjEnemyTile = enemyTile;  // set reference to MapTile object that has enemy on it
     }
 
     /*
@@ -156,15 +153,12 @@ public class MapTile : MonoBehaviour
         //     StartBattle(adjEnemyTile, adjEnemyTile.enemyType);
         else if (hasAdjEnemy){
             foreach (MapTile tile in adjacentTiles){
-                
-                // BUG: TILES AT THE EDGES REFERENCE NULL OBJECTS
-                Debug.Log("possibly adjacent");
-                if (tile.hasAnEnemy()){
-                    StartBattle(tile, tile.enemyType);
-                    adjEnemyCount -= 1;
-                    break;
-                }                
-
+                if (tile != null){
+                    if (tile.hasAnEnemy()){
+                        StartBattle(tile, tile.enemyType);
+                        break;
+                    }
+                }             
             }
         }
 

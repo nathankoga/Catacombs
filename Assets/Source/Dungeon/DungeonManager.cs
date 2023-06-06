@@ -284,7 +284,7 @@ public class DungeonManager : MonoBehaviour, IManager
         for (int row = -1; row < 2; row++){
             for (int col = -1; col < 2; col++){
                 if (( 0 <= (bx + row) && (bx + row) <= mapSize -1 ) && (0 <= (by+col) && (by+col) <= mapSize -1)){
-                    map[bx + row, by + col].setAdjacentEnemy(map[bx,by]);
+                    map[bx + row, by + col].setAdjacentEnemy();
                 } 
             }
         }
@@ -308,8 +308,8 @@ public class DungeonManager : MonoBehaviour, IManager
                     int x = enemyPos.x; 
                     int y = enemyPos.y; 
                     
-                    // if (!map[x,y].hasAnEnemy() && !map[x,y].adjacentToEnemy()){
-                    if (!map[x,y].hasAnEnemy()){
+                    if (!map[x,y].hasAnEnemy() && !map[x,y].adjacentToEnemy()){
+                    // if (!map[x,y].hasAnEnemy()){
                         map[x,y].SetEnemy(EnemyType.Test);
                         enemyNotPlaced = false;
 
@@ -320,7 +320,7 @@ public class DungeonManager : MonoBehaviour, IManager
                                 if (( 0 <= (x+row) && (x+row) <= mapSize -1) && (0 <= (y +col) && (y+col) <= mapSize -1)){
                                     // for valid positions, set the tile s.t. it has an adjacent enemy  (this prevent indexing errors)
                                     // map[x + row, y + col].setAdjacentEnemy(enemyPos);
-                                    map[x + row, y + col].setAdjacentEnemy(map[x,y]);
+                                    map[x + row, y + col].setAdjacentEnemy();
                                 } 
                             }
                         }
