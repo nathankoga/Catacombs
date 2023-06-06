@@ -283,7 +283,7 @@ public class DungeonManager : MonoBehaviour, IManager
         player.bossDefeated = false;  // flag not getting reset in the awake() function
         for (int row = -1; row < 2; row++){
             for (int col = -1; col < 2; col++){
-                if (( 0 < bx && bx < mapSize -2 ) && (0 < by && by < mapSize -2)){
+                if (( 0 <= (bx + row) && (bx + row) <= mapSize -1 ) && (0 <= (by+col) && (by+col) <= mapSize -1)){
                     map[bx + row, by + col].setAdjacentEnemy(map[bx,by]);
                 } 
             }
@@ -296,7 +296,7 @@ public class DungeonManager : MonoBehaviour, IManager
             if (idx == boss_room_idx){
                 continue;
             }
-            // break;  // todo remove this break (just for toggling enemy spawns)
+            // break;  // for toggling enemy spawns
             int numEnemies = Random.Range(2,4);
 
             for (int z = 0; z < numEnemies; z++){
@@ -308,8 +308,8 @@ public class DungeonManager : MonoBehaviour, IManager
                     int x = enemyPos.x; 
                     int y = enemyPos.y; 
                     
-                    if (!map[x,y].hasAnEnemy() && !map[x,y].adjacentToEnemy()){
-                    // if (!map[x,y].hasAnEnemy() && !map[x,y].adjacentToEnemy() && adjacentNoEnemies(x,y)){
+                    // if (!map[x,y].hasAnEnemy() && !map[x,y].adjacentToEnemy()){
+                    if (!map[x,y].hasAnEnemy()){
                         map[x,y].SetEnemy(EnemyType.Test);
                         enemyNotPlaced = false;
 
@@ -317,7 +317,7 @@ public class DungeonManager : MonoBehaviour, IManager
                             for (int col = -1; col < 2; col++){
 
                                 // set adjacent tiles to tiles that see the enemy at location enemyPos
-                                if (( 0 < x && x < mapSize -2 ) && (0 < y && y < mapSize -2)){
+                                if (( 0 <= (x+row) && (x+row) <= mapSize -1) && (0 <= (y +col) && (y+col) <= mapSize -1)){
                                     // for valid positions, set the tile s.t. it has an adjacent enemy  (this prevent indexing errors)
                                     // map[x + row, y + col].setAdjacentEnemy(enemyPos);
                                     map[x + row, y + col].setAdjacentEnemy(map[x,y]);
@@ -335,20 +335,6 @@ public class DungeonManager : MonoBehaviour, IManager
         // Send dungeon generated event.
         musicService.RequestFloorTheme(floor);
         DungeonGenerated(map, mapSize);
-    }
-
-    bool adjacentNoEnemies(int x, int y){
-        int mapSize = GetMapSize();
-        for (int row = -1; row < 2; row++){
-            for (int col = -1; col < 2; col++){
-                if (( 0 < x && x < mapSize -2 ) && (0 < y && y < mapSize -2)){
-                    if (map[x + row, y+col].adjacentToEnemy()){
-                        return false;
-                    }
-                }
-            }
-        }
-    return true;
     }
 }
 
