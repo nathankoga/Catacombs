@@ -1,5 +1,7 @@
 using System;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerBattleEntityStats
 {
@@ -39,6 +41,13 @@ public class PlayerBattleEntityStats
         }
         else{
             lives -= dmg;
+        }
+
+        if (lives == 0)
+        {
+            // DIE IDIOT
+            Debug.Log("you died...");
+            SceneManager.LoadScene("YouDied", LoadSceneMode.Single);
         }
     }
 
