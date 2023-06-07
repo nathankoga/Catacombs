@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class MapTile : MonoBehaviour
@@ -112,6 +113,12 @@ public class MapTile : MonoBehaviour
             // if we encounter boss, find reference to player GameObject, then set flag to true
             GameObject player = GameObject.Find("Player");
             player.GetComponent<PlayerLogic>().bossDefeated = true;
+
+            // If this was the final floor, WOW! We won!
+            if (gs.runStats.currentFloor == DungeonFloor.FLOOR3)
+            {
+                SceneManager.LoadScene("YouWon", LoadSceneMode.Single);
+            }
         }
     }
 
