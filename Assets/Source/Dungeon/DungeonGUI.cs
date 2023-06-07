@@ -19,7 +19,8 @@ public class DungeonGUI : MonoBehaviour, IGUIManager
     
     // remove the "wasd to move text"
     public void RemoveTutorialText(){
-        tutorialText.text = "";
+        // tutorialText.text = "";
+        DisableGUI();
     }
     
     

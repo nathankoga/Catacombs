@@ -40,7 +40,8 @@ public class DungeonManager : MonoBehaviour, IManager
     public delegate void DungeonGeneratedAction(MapTile[,] map, int mapSize);
     public static event DungeonGeneratedAction DungeonGenerated;
 
-    
+    private bool firstMove = true;
+
     void Awake()
     {
         GameState.FloorStart += GenerateDungeon;
@@ -49,7 +50,10 @@ public class DungeonManager : MonoBehaviour, IManager
 
     public void StartManager()
     {
-        GUI.EnableGUI();
+        if (firstMove){
+            GUI.EnableGUI();
+            firstMove = false;
+        }
     }
 
     public void StopManager()
