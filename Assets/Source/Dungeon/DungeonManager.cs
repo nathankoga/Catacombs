@@ -238,12 +238,17 @@ public class DungeonManager : MonoBehaviour, IManager
         // Random room has an exit point at its origin.
         if (floor != DungeonFloor.FLOOR3)
         {
-            int randomRoomIndex = Random.Range(1, rooms.Count);
-            Room exitRoom = rooms[randomRoomIndex];
-            Vector2Int exitPos = exitRoom.GetRandomInBounds();
-            map[exitPos.x, exitPos.y].isExit = true;
-            map[exitPos.x, exitPos.y].isPath = false;
-            map[exitPos.x, exitPos.y].isGround = true;
+            while (true)
+            {
+                int randomRoomIndex = Random.Range(1, rooms.Count);
+                Room exitRoom = rooms[randomRoomIndex];
+                Vector2Int exitPos = exitRoom.GetRandomInBounds();
+                if (map[exitPos.x, exitPos.y].isGround == false) continue;
+                map[exitPos.x, exitPos.y].isExit = true;
+                map[exitPos.x, exitPos.y].isPath = false;
+                map[exitPos.x, exitPos.y].isGround = true;
+                break;
+            }
         }
 
         // Initialize all tiles.
