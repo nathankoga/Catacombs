@@ -25,9 +25,13 @@ public class PlayerLogic : MonoBehaviour
     public InputAction moveAction;
     public AudioSource moveSound;
 
+    public StatsGUI statText;
+    public AbilitiesGUI abilityText;
+
     public bool bossDefeated;
 
-    
+    private bool statsGUIEnabled = false;
+
     // RunStats.cs curently imports player stats from BattleEntityStats.cs
     
 
@@ -43,6 +47,22 @@ public class PlayerLogic : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.I)) {
+            if (statsGUIEnabled){
+                // disable GUI's
+                statText.DisableGUI();
+                abilityText.DisableGUI();
+                statsGUIEnabled = false;
+                
+            }
+            else {
+                // enable GUI's
+                statText.EnableGUI();
+                abilityText.EnableGUI();
+                statsGUIEnabled = true;
+            }
+        }
+
         if (GameState.GetManagerType() == ManagerType.DUNGEON || true)
         {
             // Listen for inputs.

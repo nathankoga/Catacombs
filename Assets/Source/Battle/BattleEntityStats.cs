@@ -17,8 +17,9 @@ public class PlayerBattleEntityStats
     public int precision = 1;
     public int grace = 1; 
 
+    public int level = 1;
     public int currentExp = 0;
-    public int maxExp = 0;
+    public int maxExp = 10;
 
     public int gems = 0;
     public Amulet[] Amulets = Array.Empty<Amulet>();
