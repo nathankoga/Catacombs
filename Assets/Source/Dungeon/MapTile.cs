@@ -75,6 +75,10 @@ public class MapTile : MonoBehaviour
         return hasAdjEnemy;
 
     }
+    
+    public EnemyType referenceEnemyType(){
+        return enemyType;
+    }
 
     public GameObject referenceEnemyObject(){
         return enemyObject;

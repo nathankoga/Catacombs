@@ -21,7 +21,7 @@ public class PlayerBattleEntityStats
 
     public int level = 1;
     public int currentExp = 0;
-    public int maxExp = 10;
+    public int maxExp = 5;
 
     public int gems = 0;
     public Amulet[] Amulets = Array.Empty<Amulet>();
@@ -49,6 +49,41 @@ public class PlayerBattleEntityStats
             Debug.Log("you died...");
             SceneManager.LoadScene("YouDied", LoadSceneMode.Single);
         }
+    }
+
+    public void gainExp(EnemyType enemy){
+        switch (enemy)
+        {
+            case EnemyType.Floor1:
+                currentExp += 3;
+                break;
+
+            case EnemyType.Floor1Boss:
+                currentExp += 10;
+                break; 
+
+            default:
+                break;
+        } 
+        if (currentExp >= maxExp){
+            levelUp();
+        }
+    }
+
+
+    public void levelUp(){
+        while (currentExp >= maxExp){
+            currentExp = currentExp - maxExp;
+            level += 1;
+            setLevelExp();
+        }
+
+        // Modify stats 
+        // probably add a "level up" text/ GUI update also
+    }
+
+    public void setLevelExp(){
+        maxExp = (int) Mathf.Floor((10 + level * level)/2);
     }
 
 }

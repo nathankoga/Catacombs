@@ -288,7 +288,17 @@ public class DungeonManager : MonoBehaviour, IManager
         Vector2Int bossPos = rooms[boss_room_idx].GetRandomInBounds();
         int bx = bossPos.x;
         int by = bossPos.y;
-        map[bx,by].SetEnemy(EnemyType.FloorBoss);
+
+        if (floor == DungeonFloor.FLOOR1){
+            map[bx,by].SetEnemy(EnemyType.Floor1Boss);
+        }
+        else if (floor == DungeonFloor.FLOOR2){
+            map[bx,by].SetEnemy(EnemyType.Floor2Boss);
+        }
+        else if (floor == DungeonFloor.FLOOR3){
+            map[bx,by].SetEnemy(EnemyType.Floor3Boss);
+        }
+
         player.bossDefeated = false;  // flag not getting reset in the awake() function
         for (int row = -1; row < 2; row++){
             for (int col = -1; col < 2; col++){
@@ -318,8 +328,18 @@ public class DungeonManager : MonoBehaviour, IManager
                     int y = enemyPos.y; 
                     
                     if (!map[x,y].hasAnEnemy() && !map[x,y].adjacentToEnemy()){
-                    // if (!map[x,y].hasAnEnemy()){
-                        map[x,y].SetEnemy(EnemyType.Test);
+                        
+                        if (floor == DungeonFloor.FLOOR1){
+                            map[x,y].SetEnemy(EnemyType.Floor1);
+                        }
+                        else if (floor == DungeonFloor.FLOOR2){
+                            map[x,y].SetEnemy(EnemyType.Floor2);
+                        }
+                        else if (floor == DungeonFloor.FLOOR3){
+                            map[x,y].SetEnemy(EnemyType.Floor3);
+                        }
+
+                        // map[x,y].SetEnemy(EnemyType.Test);
                         enemyNotPlaced = false;
 
                         for (int row = -1; row < 2; row++){
