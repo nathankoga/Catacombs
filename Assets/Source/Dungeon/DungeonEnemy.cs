@@ -40,17 +40,14 @@ public class DungeonEnemy : MonoBehaviour
         // statblock = selfRefObject.GetComponent<EnemyBattleEntityStats>();
         // set the statblock values (hard-coded for now, but can set values differently based off of EnemyType enum)
         
-        // statblock = new EnemyBattleEntityStats(); 
-        // this leads to "you are trying to create a monobehaviour using the 'new' keyword error 
-        
         // NOTE: Using AddComponent<...>() initializes the script that we are attaching to DungeonEnemy
         statblock = selfRefObject.AddComponent<EnemyBattleEntityStats>();
         // Deprecated, use this 
         
-        // NOTE: Commented out just for the game presentation (Hard-coding health values to start at 3)
+        // NOTE: Hard-coding health values for the Beta Presentation
         // this.hp = statblock.health;
         
-        if (enemyType == EnemyType.FloorBoss){
+        if (enemyType == EnemyType.Floor1Boss){
             this.hp = 10;
         }
         else {
@@ -60,8 +57,7 @@ public class DungeonEnemy : MonoBehaviour
         // Set positioning.
         LerpToWorldPos(1.0f);
 
-        if (enemyType == EnemyType.FloorBoss){
-            
+        if (enemyType == EnemyType.Floor1Boss || enemyType == EnemyType.Floor2Boss || enemyType == EnemyType.Floor3Boss){
             // set color to magenta 
             selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.magenta;
             // set size to be a bit taller

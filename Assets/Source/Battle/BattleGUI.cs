@@ -77,11 +77,11 @@ public class BattleGUI : MonoBehaviour, IGUIManager
         healthBar.SetHealth( int.Parse(stats[0]));
         balanceBar.SetMaxBalance( int.Parse(stats[1]));
         balanceBar.SetBalance( int.Parse(stats[2]));
-        expBar.SetMaxExp( int.Parse(stats[3]));
-        expBar.SetExp( int.Parse(stats[4]));
+        expBar.SetExp(int.Parse(stats[3]),
+                    int.Parse(stats[4]),
+                    int.Parse(stats[5]));
 
-
-        enemyStatsText.text =  stats[5] ;
+        enemyStatsText.text =  stats[6] ;
         // enemyStatsText.text = stats[0] + "\n" + stats[1] + "\n" + stats[2] + "\n" + stats[3];
         // battleAbilitiesText.text = stats[4];
     }

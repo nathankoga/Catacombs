@@ -89,6 +89,7 @@ public class BattleManager : MonoBehaviour, IManager
         // play enemy death sound
         deathSound.Play();
         runStats.playerStats.gainExp(mapTile.referenceEnemyType());
+        playerTurn = true;
         mapTile.ClearEnemy();
         gameState.RequestManager(dungeonManager);
     }
@@ -126,8 +127,9 @@ public class BattleManager : MonoBehaviour, IManager
             runStats.playerStats.lives.ToString(),
             runStats.playerStats.maxBalance.ToString(),
             runStats.playerStats.currentBalance.ToString(),
-            runStats.playerStats.maxExp.ToString(),
+            runStats.playerStats.level.ToString(),
             runStats.playerStats.currentExp.ToString(),
+            runStats.playerStats.maxExp.ToString(),
             "Enemy HP:" + enemyRef.GetComponent<DungeonEnemy>().getHP().ToString(),
                                 
                                 };

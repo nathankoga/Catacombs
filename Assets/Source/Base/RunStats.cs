@@ -15,7 +15,7 @@ public class RunStats : MonoBehaviour
 
 
     void Start(){
-        playerStats = new PlayerBattleEntityStats(9, 0);
+        playerStats = new PlayerBattleEntityStats(3, 0);
     }
 
     PlayerBattleEntityStats get_stats(){

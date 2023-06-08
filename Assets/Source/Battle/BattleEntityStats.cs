@@ -2,6 +2,7 @@ using System;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class PlayerBattleEntityStats
 {
@@ -10,8 +11,8 @@ public class PlayerBattleEntityStats
      */
 
     public int lives = 9;   // start the player at 9 lives by default
-    public int currentBalance = 9;  
-    public int maxBalance = 9; // balance is like armor, depleted first before taking away a life (see battle design document)
+    public int currentBalance = 3;  
+    public int maxBalance = 3; // balance is like armor, depleted first before taking away a life (see battle design document)
 
     // starting battle attributes (default at 1)
     public int ferocity = 1;
@@ -72,13 +73,24 @@ public class PlayerBattleEntityStats
 
 
     public void levelUp(){
+        int upgradeNum = 0;  // set the number of times to update stats
         while (currentExp >= maxExp){
             currentExp = currentExp - maxExp;
             level += 1;
+            upgradeNum += 1;
             setLevelExp();
         }
-
+        
         // Modify stats 
+        for (int i = 0; i < upgradeNum; i++){
+            maxBalance += Random.Range(0, 1);
+            ferocity += Random.Range(0, 2);
+            stubbornness += Random.Range(0, 2);
+            precision += Random.Range(0, 2);
+            grace += Random.Range(0, 2);
+        }
+        // game bu
+        currentBalance = maxBalance + 1;
         // probably add a "level up" text/ GUI update also
     }
 

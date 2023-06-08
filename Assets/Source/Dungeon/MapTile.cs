@@ -113,7 +113,7 @@ public class MapTile : MonoBehaviour
 
         Destroy(enemyObject);
         
-        if (enemyType == EnemyType.FloorBoss){
+        if (enemyType == EnemyType.Floor1Boss || enemyType == EnemyType.Floor2Boss || enemyType == EnemyType.Floor3Boss){
             // if we encounter boss, find reference to player GameObject, then set flag to true
             GameObject player = GameObject.Find("Player");
             player.GetComponent<PlayerLogic>().bossDefeated = true;

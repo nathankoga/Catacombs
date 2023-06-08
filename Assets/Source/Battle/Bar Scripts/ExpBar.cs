@@ -10,17 +10,12 @@ public class ExpBar : MonoBehaviour
     public Slider expSlider;
     public TextMeshProUGUI expText;
 
-    public void SetMaxExp(int exp){
-        // slider is an object that represents the width of the exp bar's colored-in section
-        // by setting max value, we can accurrately represent the bar's value in terms of a ratio
-        expSlider.maxValue = exp;
-    }
-
-    public void SetExp(int exp){
+    public void SetExp(int level, int exp, int maxExp){
         expSlider.value = exp;
+        expSlider.maxValue = maxExp;
         
-        // TODO: add/ update maximum exp stats 
-        expText.text = "Exp: " + exp + "/" + expSlider.maxValue;
+        expText.text = "Lvl " + level + 
+                        ": (" + exp + "/" + maxExp + ")";
     }
 
 

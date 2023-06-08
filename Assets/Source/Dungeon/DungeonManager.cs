@@ -174,10 +174,6 @@ public class DungeonManager : MonoBehaviour, IManager
         // Cull paths.
         paths.Cull(rooms, 0.0f);
 
-        
-        /*END OF RANDOM DUNGEON GEN CODE*/
-        
-        // POC dungeon generation
 
         for (int curr = 0; curr < roomCount; curr++){
             int xStart = rooms[curr].getMinX();

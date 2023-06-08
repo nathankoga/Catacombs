@@ -15,7 +15,6 @@ public class BalanceBar : MonoBehaviour
     
     public void SetBalance(int balance){
         balanceSlider.value = balance;
-        // TODO: add/ update maximum balance stats 
         balanceText.text = "Balance: " + balance + "/" + balanceSlider.maxValue;
     }
    
