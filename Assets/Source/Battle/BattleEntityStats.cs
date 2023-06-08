@@ -24,10 +24,13 @@ public class PlayerBattleEntityStats
     public int currentExp = 0;
     public int maxExp = 5;
 
+    public int[] levelStats = {0,0,0,0,0,0};
+    public bool leveledUp = false;
+
     public int gems = 0;
     public Amulet[] Amulets = Array.Empty<Amulet>();
     public Ability[] Abilities = Array.Empty<Ability>();
-
+        
     public PlayerBattleEntityStats(int startBalance, int startGems) {
         maxBalance = startBalance;
         gems = startGems;
@@ -62,6 +65,8 @@ public class PlayerBattleEntityStats
 
     public void levelUp(){
         int upgradeNum = 0;  // set the number of times to update stats
+        int bal = 0; int fer = 0; int stu = 0; int pre = 0; int gra = 0;
+        
         while (currentExp >= maxExp){
             currentExp = currentExp - maxExp;
             level += 1;
@@ -69,17 +74,31 @@ public class PlayerBattleEntityStats
             setLevelExp();
         }
         
-        // Modify stats 
+        // Modify stats (saved this way for level up text update)
         for (int i = 0; i < upgradeNum; i++){
-            maxBalance += Random.Range(0, 2);
-            ferocity += Random.Range(0, 2);
-            stubbornness += Random.Range(0, 2);
-            precision += Random.Range(0, 2);
-            grace += Random.Range(0, 2);
+            bal += Random.Range(0, 2);
+            fer += Random.Range(0, 2);
+            stu += Random.Range(0, 2);
+            pre += Random.Range(0, 2);
+            gra += Random.Range(0, 2);
         }
+        levelStats[0]= bal;
+        levelStats[1]= fer;
+        levelStats[2]= stu;
+        levelStats[3]= pre;
+        levelStats[4]= gra;
+        levelStats[5]= upgradeNum;
+        leveledUp = true;
+
         // random bug where balance gets set one lower (MIGHT BE DUE TO TURN ORDER, EVEN THOUGH I THOUGHT I FIXED)
+        maxBalance += bal;
+        ferocity += fer;
+        stubbornness += stu;
+        precision += pre;
+        grace += gra;
+
+        
         currentBalance = maxBalance + 1;
-        // probably add a "level up" text/ GUI update also
     }
 
     public void setLevelExp(){

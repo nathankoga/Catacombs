@@ -48,7 +48,13 @@ public class PlayerLogic : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.I)) {
-            if (statsGUIEnabled){
+            // check for levelUp toggle 
+            if (statText.leveledUp){
+                statText.DisableGUI();
+                statText.leveledUp = false;
+            }
+            
+            else if (statsGUIEnabled){
                 // disable GUI's
                 statText.DisableGUI();
                 abilityText.DisableGUI();

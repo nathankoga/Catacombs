@@ -15,6 +15,7 @@ public class BattleManager : MonoBehaviour, IManager
     public GameState gameState;
     public DungeonManager dungeonManager;
     public BattleGUI GUI;
+    public StatsGUI statsGUI;
 
     public RunStats runStats;
 
@@ -89,6 +90,13 @@ public class BattleManager : MonoBehaviour, IManager
         // play enemy death sound
         deathSound.Play();
         runStats.playerStats.gainExp(enemyRef.GetComponent<DungeonEnemy>().expGain);
+        
+        // can't reference StatsGUI from playerStats, so we check for level here
+        if (runStats.playerStats.leveledUp){
+            statsGUI.levelupGUI();
+            runStats.playerStats.leveledUp = false;
+        }
+
         playerTurn = true;
         mapTile.ClearEnemy();
         gameState.RequestManager(dungeonManager);
