@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/YouDied.unity
     guid: b093aa99d060edb4d988147cc1be9529
+  - enabled: 1
+    path: Assets/Scenes/YouWon.unity
+    guid: 9f21f2c096f2caa4b911654db9a7bdef
   m_configObjects: {}
