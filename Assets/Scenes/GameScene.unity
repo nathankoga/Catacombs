@@ -544,6 +544,7 @@ MonoBehaviour:
   statblock: {fileID: 0}
   worldOffset: {x: 0, y: 0, z: 0}
   hp: 0
+  expGain: 0
 --- !u!4 &128948183
 Transform:
   m_ObjectHideFlags: 0
@@ -2310,6 +2311,7 @@ MonoBehaviour:
   enemyStatsText: {fileID: 409508216}
   battleAbilitiesText: {fileID: 367884305}
   canvas: {fileID: 1670071521}
+  runStats: {fileID: 1441091959}
   healthBar: {fileID: 1436042459}
   balanceBar: {fileID: 418524574}
   expBar: {fileID: 2080351039}

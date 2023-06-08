@@ -15,6 +15,8 @@ public class BattleGUI : MonoBehaviour, IGUIManager
     public TextMeshProUGUI battleAbilitiesText;
     public Canvas canvas;
 
+    public RunStats runStats;
+
     public HealthBar healthBar;    
     public BalanceBar balanceBar;    
     public ExpBar expBar;    
@@ -45,12 +47,17 @@ public class BattleGUI : MonoBehaviour, IGUIManager
 
     void buttonOneEffect() {
         Debug.Log("You clicked button one\n");
-        battleManager.DamageEnemy(1);
+        // battleManager.DamageEnemy(1);
+        battleManager.DamageEnemy(runStats.playerStats.ferocity);
     }
 
     void buttonTwoEffect() {
         Debug.Log("You clicked button two\n");
-        battleManager.DamageEnemy(2);
+        
+        // just to simulate two swipes for now 
+        battleManager.DamageEnemy(runStats.playerStats.ferocity);
+        battleManager.DamageEnemy(runStats.playerStats.ferocity);
+        // battleManager.DamageEnemy(2);
     }
 
     void buttonThreeEffect() {

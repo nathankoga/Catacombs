@@ -16,6 +16,8 @@ public class EnemyBattleEntityStats : MonoBehaviour
     public int stubbornness = 1;
     public int precision = 1;
     public int grace = 1;
+    // public int expGain= 1;
+
 
     public int gems = 0;
 

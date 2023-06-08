@@ -52,20 +52,8 @@ public class PlayerBattleEntityStats
         }
     }
 
-    public void gainExp(EnemyType enemy){
-        switch (enemy)
-        {
-            case EnemyType.Floor1:
-                currentExp += 3;
-                break;
-
-            case EnemyType.Floor1Boss:
-                currentExp += 10;
-                break; 
-
-            default:
-                break;
-        } 
+    public void gainExp(int exp){
+        currentExp += exp;
         if (currentExp >= maxExp){
             levelUp();
         }
@@ -83,13 +71,13 @@ public class PlayerBattleEntityStats
         
         // Modify stats 
         for (int i = 0; i < upgradeNum; i++){
-            maxBalance += Random.Range(0, 1);
+            maxBalance += Random.Range(0, 2);
             ferocity += Random.Range(0, 2);
             stubbornness += Random.Range(0, 2);
             precision += Random.Range(0, 2);
             grace += Random.Range(0, 2);
         }
-        // game bu
+        // random bug where balance gets set one lower (MIGHT BE DUE TO TURN ORDER, EVEN THOUGH I THOUGHT I FIXED)
         currentBalance = maxBalance + 1;
         // probably add a "level up" text/ GUI update also
     }

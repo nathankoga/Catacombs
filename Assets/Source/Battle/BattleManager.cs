@@ -88,7 +88,7 @@ public class BattleManager : MonoBehaviour, IManager
     {
         // play enemy death sound
         deathSound.Play();
-        runStats.playerStats.gainExp(mapTile.referenceEnemyType());
+        runStats.playerStats.gainExp(enemyRef.GetComponent<DungeonEnemy>().expGain);
         playerTurn = true;
         mapTile.ClearEnemy();
         gameState.RequestManager(dungeonManager);

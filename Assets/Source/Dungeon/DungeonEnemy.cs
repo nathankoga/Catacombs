@@ -14,6 +14,7 @@ public class DungeonEnemy : MonoBehaviour
     private EnemyType enemyType;
 
     public int hp; // This reflects current hit points, it will be modified in combat and may reach zero
+    public int expGain; 
     // private int gems = 0;  // possible later mechanic?    
 
     public int getHP()
@@ -47,22 +48,58 @@ public class DungeonEnemy : MonoBehaviour
         // NOTE: Hard-coding health values for the Beta Presentation
         // this.hp = statblock.health;
         
-        if (enemyType == EnemyType.Floor1Boss){
-            this.hp = 10;
-        }
-        else {
-            this.hp = 3;
-        }
+        switch (enemyType) {
+            case EnemyType.Floor1:
+                this.hp = 3;
+                expGain = 3;
+                break;
 
+            case EnemyType.Floor2:
+                this.hp = 10;
+                expGain = 6;
+                break;
+
+            case EnemyType.Floor3:
+                this.hp = 15;
+                expGain = 8;
+                break;
+            
+            case EnemyType.Floor1Boss:
+                this.hp = 10;
+                expGain = 10;
+                selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.magenta;
+                selfRefObject.gameObject.transform.localScale += new Vector3(1, 3, 1);
+                break;
+
+            case EnemyType.Floor2Boss:
+                this.hp = 25;
+                expGain = 15;
+                selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.green;
+                selfRefObject.gameObject.transform.localScale += new Vector3(1, 4, 1);
+                break;
+
+            case EnemyType.Floor3Boss:
+                this.hp = 40;
+                expGain = 20;
+                selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+                selfRefObject.gameObject.transform.localScale += new Vector3(1, 5, 1);
+                break;
+
+            default:
+                break;
+
+
+        }
+        
         // Set positioning.
         LerpToWorldPos(1.0f);
 
-        if (enemyType == EnemyType.Floor1Boss || enemyType == EnemyType.Floor2Boss || enemyType == EnemyType.Floor3Boss){
-            // set color to magenta 
-            selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.magenta;
-            // set size to be a bit taller
-            selfRefObject.gameObject.transform.localScale += new Vector3(1, 3, 1);
-        }
+        // if (enemyType == EnemyType.Floor1Boss || enemyType == EnemyType.Floor2Boss || enemyType == EnemyType.Floor3Boss){
+        //     // set color to magenta 
+        //     selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.magenta;
+        //     // set size to be a bit taller
+        //     selfRefObject.gameObject.transform.localScale += new Vector3(1, 3, 1);
+        // }
     }
 
     private void LerpToWorldPos(float t)
