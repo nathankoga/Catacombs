@@ -94,6 +94,11 @@ public class Room
     public int getMinY() { return pos[1]; }
     public int getMaxY() { return pos[1] + size[1]; }
 
+    public int getHeight()
+    {
+        return size[1];
+    }
+
     public Vector2Int GetRandomInBounds()
     {
         return new Vector2Int(Random.Range(getMinX(), getMaxX()), Random.Range(getMinY(), getMaxY()));
@@ -107,5 +112,15 @@ public class Room
         bool yOverlap = (this.getMaxY() >= other.getMinY()) & (other.getMaxY() >= this.getMinY());
         return xOverlap & yOverlap;
     }
-    
+
+    public bool ContainsTile(Vector2 tilePos)
+    {
+        // check if a tile is within the bounds of the room
+        return (tilePos[0] >= pos[0]) & (tilePos[0] < pos[0] + size[0]) & (tilePos[1] >= pos[1]) & (tilePos[1] < pos[1] + size[1]);
+    }
+
+    public Vector2 GetCenter()
+    {
+        return new Vector2(pos[0] + size[0] / 2, pos[1] + size[1] / 2);
+    }
 }

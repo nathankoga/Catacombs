@@ -30,8 +30,8 @@ public class DungeonManager : MonoBehaviour, IManager
 
     public GameObject dungeonParent;
     public GameObject TilePrefab;
-    static float xTileOffset = 5.0f;
-    static float yTileOffset = 5.0f;
+    public static float xTileOffset = 5.0f;
+    public static float yTileOffset = 5.0f;
 
     public DungeonFloor floor;
     public GameState gs;
@@ -80,6 +80,20 @@ public class DungeonManager : MonoBehaviour, IManager
         if (tilePosition.x < 0 || tilePosition.y < 0) { return null; }
         if (tilePosition.x >= cachedMapSize || tilePosition.y >= cachedMapSize) { return null; }
         return map[(int)tilePosition.x, (int)tilePosition.y];
+    }
+
+    public Room GetRoomAtPos(Vector2 tilePosition)
+    {
+        // Iterate over each room.
+        foreach (Room room in rooms)
+        {
+            // Check if the tile is in the room.
+            if (room.ContainsTile(tilePosition))
+            {
+                return room;
+            }
+        }
+        return null;
     }
 
     /*

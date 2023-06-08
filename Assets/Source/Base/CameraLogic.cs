@@ -11,6 +11,8 @@ public class CameraLogic : MonoBehaviour
      */
 
     public GameObject player;
+    public PlayerLogic pl;
+    public DungeonManager dungeonManager;
     public Vector3 worldOffset;
     private void FixedUpdate()
     {
@@ -36,6 +38,18 @@ public class CameraLogic : MonoBehaviour
 
     public Vector3 GetTargetWorldPos()
     {
+        // Is the player in a room?
+        /*
+        Room room = dungeonManager.GetRoomAtPos(pl.tilePosition);
+        if (room != null)
+        {
+            // If so, plant the camera around the whole room.
+            Vector3 newWorldOffset = worldOffset * ((float)room.getHeight()) / 1.8f;
+            return worldOffset + DungeonManager.GetWorldTilePosition(room.GetCenter());
+        }
+        */
+
+        // Follow the player's position.
         return player.transform.position + worldOffset;
     }
 }
