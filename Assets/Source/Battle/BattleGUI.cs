@@ -66,6 +66,10 @@ public class BattleGUI : MonoBehaviour, IGUIManager
 
     void buttonFourEffect() {
         Debug.Log("You clicked button four\n");
+
+        // lick wounds = lose one hp for balance
+        battleManager.ExchangeHPForBalance(1);
+
     }
     
     void buttonFiveEffect() {

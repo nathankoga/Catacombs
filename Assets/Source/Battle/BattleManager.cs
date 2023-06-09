@@ -116,7 +116,13 @@ public class BattleManager : MonoBehaviour, IManager
     }
 
     public void DamagePlayer(int dmg){
-        runStats.playerStats.loseHP(dmg);
+        runStats.playerStats.loseHP(dmg, true);
+    }
+
+    public void ExchangeHPForBalance(int dmg) {
+        // refill balance bar
+        runStats.playerStats.refillBalance();
+        runStats.playerStats.loseHP(dmg, false);
     }
 
 

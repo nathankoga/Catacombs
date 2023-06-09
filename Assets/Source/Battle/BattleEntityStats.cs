@@ -36,11 +36,13 @@ public class PlayerBattleEntityStats
         gems = startGems;
     }
 
-    public void loseHP(int dmg){
+    public void loseHP(int dmg, bool useBalance){
 
         // 10 second solution, please change bc this is not sound at all - Nathan
+        // useBalance is true if it's a regular hit
+        // false if you just want to lose HP and not hit balance first
 
-        if (currentBalance>0){
+        if (currentBalance>0 && useBalance){
             currentBalance -= dmg;
         }
         else{
@@ -53,6 +55,12 @@ public class PlayerBattleEntityStats
             Debug.Log("you died...");
             SceneManager.LoadScene("YouDied", LoadSceneMode.Single);
         }
+    }
+
+    public void refillBalance() {
+        // fills balance all the way up to maxBalance
+        currentBalance = maxBalance;
+        Debug.Log("refilled balance to " + maxBalance);
     }
 
     public void gainExp(int exp){
