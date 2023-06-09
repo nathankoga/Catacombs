@@ -57,7 +57,7 @@ public class BattleManager : MonoBehaviour, IManager
         this.enemyType = enemyType;
         enemyRef = this.mapTile.referenceEnemyObject();
         enemyRef.GetComponentInChildren<MeshRenderer>().material.color = Color.cyan;
-        runStats.playerStats.refillBalance(); // enemy still seems to go first —maya
+        runStats.playerStats.refillBalance(); // enemy still seems to go first ï¿½maya
         gameState.RequestManager(this);
     }
 
@@ -142,12 +142,19 @@ public class BattleManager : MonoBehaviour, IManager
         {
             dmg += enemystats.ferocity; // in place of critdmg
         }
-        dmg = Mathf.Max(dmg, 0);
+        dmg = Mathf.Max(dmg, 1);
         return dmg;
     }
 
     public void AttackPlayer()
     {
+        // delays the combat slightly
+        Invoke("delayedAttack", 0.5f);
+        // int dmg = BasicEnemyAttack(enemyRef.GetComponent<DungeonEnemy>(), runStats.playerStats);
+        // DamagePlayer(dmg);
+    }
+
+    public void delayedAttack(){
         int dmg = BasicEnemyAttack(enemyRef.GetComponent<DungeonEnemy>(), runStats.playerStats);
         DamagePlayer(dmg);
     }
