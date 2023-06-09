@@ -5,13 +5,25 @@ public class DungeonEnemy : MonoBehaviour
     /*
      * This class has the logic for an enemy represented on a dungeon tile.
      */
+
+    // bad hacky solution to extend old EnemyType logic
+    // these are all the statblocks for game enemies to initialize
+    public EnemyBattleEntityStats floor1;
+    public EnemyBattleEntityStats floor2;
+    public EnemyBattleEntityStats floor3;
+    public EnemyBattleEntityStats floor1boss;
+    public EnemyBattleEntityStats floor2boss;
+    public EnemyBattleEntityStats floor3boss;
+
     public EnemyBattleEntityStats statblock;
+
     public Vector3 worldOffset;
 
     private GameObject selfRefObject;
 
     private MapTile mapTile;
     private EnemyType enemyType;
+
 
     public int hp; // This reflects current hit points, it will be modified in combat and may reach zero
     public int expGain; 
@@ -50,21 +62,25 @@ public class DungeonEnemy : MonoBehaviour
         
         switch (enemyType) {
             case EnemyType.Floor1:
+                this.statblock = floor1;
                 this.hp = 3;
                 expGain = 3;
                 break;
 
             case EnemyType.Floor2:
+                this.statblock = floor2;
                 this.hp = 10;
                 expGain = 6;
                 break;
 
             case EnemyType.Floor3:
+                this.statblock = floor3;
                 this.hp = 15;
                 expGain = 8;
                 break;
             
             case EnemyType.Floor1Boss:
+                this.statblock = floor1boss;
                 this.hp = 10;
                 expGain = 10;
                 selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.magenta;
@@ -72,6 +88,7 @@ public class DungeonEnemy : MonoBehaviour
                 break;
 
             case EnemyType.Floor2Boss:
+                this.statblock = floor2boss;
                 this.hp = 25;
                 expGain = 15;
                 selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.green;
@@ -79,6 +96,7 @@ public class DungeonEnemy : MonoBehaviour
                 break;
 
             case EnemyType.Floor3Boss:
+                this.statblock = floor3boss;
                 this.hp = 40;
                 expGain = 20;
                 selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;

@@ -16,6 +16,8 @@ public class BattleManager : MonoBehaviour, IManager
     public DungeonManager dungeonManager;
     public BattleGUI GUI;
     public StatsGUI statsGUI;
+    public BasicAttack bite;
+    public BasicAttack scratch;
 
     public RunStats runStats;
 
@@ -55,6 +57,7 @@ public class BattleManager : MonoBehaviour, IManager
         this.enemyType = enemyType;
         enemyRef = this.mapTile.referenceEnemyObject();
         enemyRef.GetComponentInChildren<MeshRenderer>().material.color = Color.cyan;
+        runStats.playerStats.refillBalance(); // enemy still seems to go first —maya
         gameState.RequestManager(this);
     }
 
@@ -113,6 +116,20 @@ public class BattleManager : MonoBehaviour, IManager
             WinBattle();
         }
         playerTurn = false;
+    }
+
+    // this should be done somewhere else to reduce clutter but we dont have time
+    public void Bite()
+    {
+        int attackdmg = bite.CalculateDamage(runStats.playerStats, enemyRef.GetComponent<DungeonEnemy>().statblock);
+        DamageEnemy(attackdmg);
+    }
+
+    public void Scratch()
+    {
+        int attackdmg = bite.CalculateDamage(runStats.playerStats, enemyRef.GetComponent<DungeonEnemy>().statblock);
+        attackdmg += bite.CalculateDamage(runStats.playerStats, enemyRef.GetComponent<DungeonEnemy>().statblock);
+        DamageEnemy(attackdmg);
     }
 
     public void DamagePlayer(int dmg){

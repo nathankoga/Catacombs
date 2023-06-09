@@ -42,10 +42,14 @@ public class PlayerBattleEntityStats
         // useBalance is true if it's a regular hit
         // false if you just want to lose HP and not hit balance first
 
-        if (currentBalance>0 && useBalance){
+        if (currentBalance>0 && useBalance) {
             currentBalance -= dmg;
+            if (currentBalance < 0) {
+                lives += currentBalance;
+                currentBalance = 0;
+            }
         }
-        else{
+        else {
             lives -= dmg;
         }
 

@@ -12,21 +12,3 @@ public class Ability
     public AbilityType type = AbilityType.TODO;
 
 }
-
-public class BasicAttack
-{
-    /*
-     * (See design document)
-     * Basic representation of an attack that deals damage.
-     * Damage-dealing abilities will contain references to
-     * an instance of BasicAttack.
-     */
-
-    public int base_dmg = 1;
-    public int min_dmg = 1;
-    // Critical rates stored in integer form as a percentage
-    public int base_critrate = 25;
-    public int min_critrate = 5;
-    public int crit_dmg = 2;
-
-}
