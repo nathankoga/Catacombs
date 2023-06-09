@@ -6,16 +6,22 @@ public class DungeonEnemy : MonoBehaviour
      * This class has the logic for an enemy represented on a dungeon tile.
      */
 
-    // bad hacky solution to extend old EnemyType logic
-    // these are all the statblocks for game enemies to initialize
+    /*
     public EnemyBattleEntityStats floor1;
     public EnemyBattleEntityStats floor2;
     public EnemyBattleEntityStats floor3;
     public EnemyBattleEntityStats floor1boss;
     public EnemyBattleEntityStats floor2boss;
     public EnemyBattleEntityStats floor3boss;
+    */
 
-    public EnemyBattleEntityStats statblock;
+    // i hate this but i spent hours trying to make the above work im giving up on the featherweight pattern
+    public int ferocity = 1;
+    public int stubbornness = 1;
+    public int precision = 1;
+    public int grace = 1;
+
+    private EnemyBattleEntityStats statblock;
 
     public Vector3 worldOffset;
 
@@ -42,6 +48,11 @@ public class DungeonEnemy : MonoBehaviour
         this.hp -= dmg;
     }
 
+    public EnemyBattleEntityStats getStatblock()
+    {
+        return this.statblock;
+    }
+
     public void Initialize(MapTile mapTile, EnemyType enemyType)
     {
         // Set enums.
@@ -62,25 +73,37 @@ public class DungeonEnemy : MonoBehaviour
         
         switch (enemyType) {
             case EnemyType.Floor1:
-                this.statblock = floor1;
+                ferocity = 1;
+                stubbornness = 1;
+                precision = 1;
+                grace = 1;
                 this.hp = 3;
                 expGain = 3;
                 break;
 
             case EnemyType.Floor2:
-                this.statblock = floor2;
+                ferocity = 2;
+                stubbornness = 1;
+                precision = 2;
+                grace = 2;
                 this.hp = 10;
                 expGain = 6;
                 break;
 
             case EnemyType.Floor3:
-                this.statblock = floor3;
+                ferocity = 3;
+                stubbornness = 3;
+                precision = 3;
+                grace = 2;
                 this.hp = 15;
                 expGain = 8;
                 break;
             
             case EnemyType.Floor1Boss:
-                this.statblock = floor1boss;
+                ferocity = 2;
+                stubbornness = 2;
+                precision = 1;
+                grace = 1;
                 this.hp = 10;
                 expGain = 10;
                 selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.magenta;
@@ -88,7 +111,10 @@ public class DungeonEnemy : MonoBehaviour
                 break;
 
             case EnemyType.Floor2Boss:
-                this.statblock = floor2boss;
+                ferocity = 3;
+                stubbornness = 2;
+                precision = 3;
+                grace = 2;
                 this.hp = 25;
                 expGain = 15;
                 selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.green;
@@ -96,7 +122,10 @@ public class DungeonEnemy : MonoBehaviour
                 break;
 
             case EnemyType.Floor3Boss:
-                this.statblock = floor3boss;
+                ferocity = 4;
+                stubbornness = 4;
+                precision = 3;
+                grace = 2;
                 this.hp = 40;
                 expGain = 20;
                 selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;

@@ -19,10 +19,10 @@ public class BasicAttack : MonoBehaviour
     public int min_critrate = 5;
     public int crit_dmg = 2;
 
-    public int CalculateDamage(PlayerBattleEntityStats playerstats, EnemyBattleEntityStats enemystats) 
+    public int CalculateDamage(PlayerBattleEntityStats playerstats, DungeonEnemy enemystats) 
     {
         int dmg = base_dmg + playerstats.ferocity - enemystats.stubbornness;
-        int critrate = base_critrate + (5 * playerstats.precision) - (5 * enemystats.grace);
+        int critrate = base_critrate + (10 * playerstats.precision) - (10 * enemystats.grace);
         critrate = Mathf.Max(critrate, min_critrate);
         if (Random.Range(1, 100) < critrate) {
             dmg += crit_dmg;

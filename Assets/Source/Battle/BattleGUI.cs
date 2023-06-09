@@ -48,15 +48,14 @@ public class BattleGUI : MonoBehaviour, IGUIManager
     void buttonOneEffect() {
         Debug.Log("You clicked button one\n");
         // battleManager.DamageEnemy(1);
-        battleManager.DamageEnemy(runStats.playerStats.ferocity);
+        battleManager.Bite();
     }
 
     void buttonTwoEffect() {
         Debug.Log("You clicked button two\n");
         
         // just to simulate two swipes for now 
-        battleManager.DamageEnemy(runStats.playerStats.ferocity);
-        battleManager.DamageEnemy(runStats.playerStats.ferocity);
+        battleManager.Scratch();
         // battleManager.DamageEnemy(2);
     }
 
