@@ -149,7 +149,8 @@ public class BattleManager : MonoBehaviour, IManager
     public void AttackPlayer()
     {
         // delays the combat slightly
-        Invoke("delayedAttack", 0.5f);
+        // breaks game by means of skipping their damage turns
+        Invoke("delayedAttack", 0.0f);
         // int dmg = BasicEnemyAttack(enemyRef.GetComponent<DungeonEnemy>(), runStats.playerStats);
         // DamagePlayer(dmg);
     }
