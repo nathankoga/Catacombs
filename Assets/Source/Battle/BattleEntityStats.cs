@@ -53,7 +53,7 @@ public class PlayerBattleEntityStats
             lives -= dmg;
         }
 
-        if (lives == 0)
+        if (lives <= 0)
         {
             // DIE IDIOT
             Debug.Log("you died...");
