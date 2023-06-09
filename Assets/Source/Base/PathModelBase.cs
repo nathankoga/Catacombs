@@ -10,7 +10,7 @@ public abstract class PathModelBase : TileModelBase
     {
         return this.mapTile.isPath = true;
     }
-    public override void Initialize()
+    public override void Initialize(DungeonFloor floor)
     {
         SetPathingVisibility();
     }

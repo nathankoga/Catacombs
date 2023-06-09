@@ -58,7 +58,7 @@ public class MapTile : MonoBehaviour
         {
             if (tileModel.CanInitialize(floor))
             {
-                tileModel.Initialize();
+                tileModel.Initialize(floor);
             } else
             {
                 tileModel.transform.gameObject.SetActive(false);

@@ -8,7 +8,7 @@ public class BaseGravel : TileModelBase
     {
         return mapTile.isGround && (floor == DungeonFloor.FLOOR2) && (!mapTile.isExit);
     }
-    public override void Initialize()
+    public override void Initialize(DungeonFloor floor)
     {
         if (Random.Range(0, 100) < 70)
         {

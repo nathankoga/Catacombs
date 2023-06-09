@@ -102,15 +102,15 @@ public class DungeonManager : MonoBehaviour, IManager
 
     int GetRoomCount()
     {
-        if (floor == DungeonFloor.FLOOR2) return 8;
-        if (floor == DungeonFloor.FLOOR3) return 11;
+        if (floor == DungeonFloor.FLOOR2) return 7;
+        if (floor == DungeonFloor.FLOOR3) return 9;
         return 5;
     }
 
     int GetMapSize()
     {
         if (floor == DungeonFloor.FLOOR2) return 25;
-        if (floor == DungeonFloor.FLOOR3) return 30;
+        if (floor == DungeonFloor.FLOOR3) return 50;
         return 20;
 
     }

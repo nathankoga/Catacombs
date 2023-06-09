@@ -8,7 +8,7 @@ public class BaseForest : TileModelBase
     {
         return mapTile.isGround && (floor == DungeonFloor.FLOOR1) && (!mapTile.isExit);
     }
-    public override void Initialize()
+    public override void Initialize(DungeonFloor floor)
     {
         if (Random.Range(0, 100) < 70)
         {
