@@ -115,7 +115,6 @@ public class BattleManager : MonoBehaviour, IManager
         {
             WinBattle();
         }
-        playerTurn = false;
     }
 
     // this should be done somewhere else to reduce clutter but we dont have time
@@ -123,6 +122,7 @@ public class BattleManager : MonoBehaviour, IManager
     {
         int attackdmg = bite.CalculateDamage(runStats.playerStats, enemyRef.GetComponent<DungeonEnemy>());
         DamageEnemy(attackdmg);
+        playerTurn = false;
     }
 
     public void Scratch()
@@ -130,6 +130,7 @@ public class BattleManager : MonoBehaviour, IManager
         int attackdmg = scratch.CalculateDamage(runStats.playerStats, enemyRef.GetComponent<DungeonEnemy>());
         attackdmg += scratch.CalculateDamage(runStats.playerStats, enemyRef.GetComponent<DungeonEnemy>());
         DamageEnemy(attackdmg);
+        playerTurn = false;
     }
 
     // should go through the basic attack system, but short on time 
@@ -141,6 +142,7 @@ public class BattleManager : MonoBehaviour, IManager
         {
             dmg += enemystats.ferocity; // in place of critdmg
         }
+        dmg = Mathf.Max(dmg, 0);
         return dmg;
     }
 
@@ -158,6 +160,19 @@ public class BattleManager : MonoBehaviour, IManager
         // refill balance bar
         runStats.playerStats.refillBalance();
         runStats.playerStats.loseHP(dmg, false);
+        // player can have another turn as a treat
+    }
+
+    public void Hiss()
+    {
+        // Lower the enemy's precision by 5 and grace by 3, greatly lowering the risk of critical hits and raising your own critical hit chane
+        if (enemyRef.GetComponent<DungeonEnemy>().is_debuffed) {
+            return;
+        }
+        enemyRef.GetComponent<DungeonEnemy>().is_debuffed = true;
+        enemyRef.GetComponent<DungeonEnemy>().precision = Mathf.Max(0, enemyRef.GetComponent<DungeonEnemy>().precision - 5);
+        enemyRef.GetComponent<DungeonEnemy>().grace = Mathf.Max(0, enemyRef.GetComponent<DungeonEnemy>().grace - 3);
+        playerTurn = false;
     }
 
 

@@ -88,11 +88,18 @@ public class PlayerBattleEntityStats
         
         // Modify stats (saved this way for level up text update)
         for (int i = 0; i < upgradeNum; i++){
-            bal += Random.Range(0, 2);
+            bal += 1; // not getting any balance level-ups is a game-ender you can't really play around, also 3 balance is pretty low
             fer += Random.Range(0, 2);
             stu += Random.Range(0, 2);
             pre += Random.Range(0, 2);
             gra += Random.Range(0, 2);
+            if ((fer+stu+pre+gra) == 0) // One-time pity chance if no attributes increased, inspired from Fire Emblem which has an identical mechanic.
+            {
+                fer += Random.Range(0, 2);
+                stu += Random.Range(0, 2);
+                pre += Random.Range(0, 2);
+                gra += Random.Range(0, 2);
+            }
         }
         levelStats[0]= bal;
         levelStats[1]= fer;

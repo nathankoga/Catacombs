@@ -53,19 +53,17 @@ public class BattleGUI : MonoBehaviour, IGUIManager
 
     void buttonTwoEffect() {
         Debug.Log("You clicked button two\n");
-        
-        // just to simulate two swipes for now 
         battleManager.Scratch();
         // battleManager.DamageEnemy(2);
     }
 
     void buttonThreeEffect() {
+        battleManager.Hiss();
         Debug.Log("You clicked button three\n");
     }
 
     void buttonFourEffect() {
         Debug.Log("You clicked button four\n");
-
         // lick wounds = lose one hp for balance
         battleManager.ExchangeHPForBalance(1);
 

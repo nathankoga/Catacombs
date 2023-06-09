@@ -6,6 +6,7 @@ public class EnemyBattleEntityStats : MonoBehaviour
 {
     /*
      * A dataclass for holding and manipulating enemy entity data.
+     * CURRENTLY UNUSED
      */
     public EnemyType type;
 

@@ -21,6 +21,8 @@ public class DungeonEnemy : MonoBehaviour
     public int precision = 1;
     public int grace = 1;
 
+    public bool is_debuffed = false;
+
     private EnemyBattleEntityStats statblock;
 
     public Vector3 worldOffset;
@@ -77,33 +79,33 @@ public class DungeonEnemy : MonoBehaviour
                 stubbornness = 1;
                 precision = 1;
                 grace = 1;
-                this.hp = 3;
+                this.hp = 5;
                 expGain = 3;
                 break;
 
             case EnemyType.Floor2:
-                ferocity = 2;
-                stubbornness = 1;
+                ferocity = 3;
+                stubbornness = 2;
                 precision = 2;
                 grace = 2;
-                this.hp = 10;
+                this.hp = 15;
                 expGain = 6;
                 break;
 
             case EnemyType.Floor3:
-                ferocity = 3;
-                stubbornness = 3;
-                precision = 3;
+                ferocity = 5;
+                stubbornness = 4;
+                precision = 4;
                 grace = 2;
-                this.hp = 15;
+                this.hp = 20;
                 expGain = 8;
                 break;
             
             case EnemyType.Floor1Boss:
                 ferocity = 2;
                 stubbornness = 2;
-                precision = 1;
-                grace = 1;
+                precision = 2;
+                grace = 2;
                 this.hp = 10;
                 expGain = 10;
                 selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.magenta;
@@ -111,21 +113,22 @@ public class DungeonEnemy : MonoBehaviour
                 break;
 
             case EnemyType.Floor2Boss:
-                ferocity = 3;
-                stubbornness = 2;
+                ferocity = 5;
+                stubbornness = 3;
                 precision = 3;
-                grace = 2;
-                this.hp = 25;
+                grace = 3;
+                this.hp = 30;
                 expGain = 15;
                 selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.green;
                 selfRefObject.gameObject.transform.localScale += new Vector3(1, 4, 1);
                 break;
 
             case EnemyType.Floor3Boss:
-                ferocity = 4;
-                stubbornness = 4;
-                precision = 3;
-                grace = 2;
+                // this enemy is intended to FLOOR YOU if you don't use Hiss
+                ferocity = 6;
+                stubbornness = 6;
+                precision = 7;
+                grace = 5;
                 this.hp = 40;
                 expGain = 20;
                 selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
