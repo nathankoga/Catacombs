@@ -30,7 +30,7 @@ public class DungeonEnemy : MonoBehaviour
     private GameObject selfRefObject;
 
     private MapTile mapTile;
-    private EnemyType enemyType;
+    public EnemyType enemyType;
 
 
     public int hp; // This reflects current hit points, it will be modified in combat and may reach zero
@@ -86,7 +86,7 @@ public class DungeonEnemy : MonoBehaviour
             case EnemyType.Floor2:
                 ferocity = 3;
                 stubbornness = 2;
-                precision = 2;
+                precision = 3;
                 grace = 2;
                 this.hp = 15;
                 expGain = 6;
@@ -95,7 +95,7 @@ public class DungeonEnemy : MonoBehaviour
             case EnemyType.Floor3:
                 ferocity = 5;
                 stubbornness = 4;
-                precision = 4;
+                precision = 5;
                 grace = 2;
                 this.hp = 20;
                 expGain = 8;
@@ -129,7 +129,7 @@ public class DungeonEnemy : MonoBehaviour
                 stubbornness = 6;
                 precision = 7;
                 grace = 5;
-                this.hp = 40;
+                this.hp = 45;
                 expGain = 20;
                 selfRefObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
                 selfRefObject.gameObject.transform.localScale += new Vector3(1, 5, 1);

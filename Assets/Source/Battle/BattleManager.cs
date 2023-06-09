@@ -142,7 +142,15 @@ public class BattleManager : MonoBehaviour, IManager
         {
             dmg += enemystats.ferocity; // in place of critdmg
         }
-        dmg = Mathf.Max(dmg, 1);
+        if (enemystats.enemyType == EnemyType.Floor1 || enemystats.enemyType == EnemyType.Floor2){
+            dmg = Mathf.Max(dmg, 1); 
+        }
+        
+        else if (enemystats.enemyType == EnemyType.Floor3Boss )
+            {
+                dmg = Mathf.Max(dmg, 3);
+            }
+        else { dmg = Mathf.Max(dmg, 2); }
         return dmg;
     }
 
@@ -178,6 +186,9 @@ public class BattleManager : MonoBehaviour, IManager
             return;
         }
         enemyRef.GetComponent<DungeonEnemy>().is_debuffed = true;
+        Color color = Color.white;
+        color.r = 0.5f; color.g = 0.3f; color.b = 0.9f; color.a = 0.9f;
+        enemyRef.GetComponentInChildren<MeshRenderer>().material.color = color;
         enemyRef.GetComponent<DungeonEnemy>().precision = Mathf.Max(0, enemyRef.GetComponent<DungeonEnemy>().precision - 5);
         enemyRef.GetComponent<DungeonEnemy>().grace = Mathf.Max(0, enemyRef.GetComponent<DungeonEnemy>().grace - 3);
         playerTurn = false;
