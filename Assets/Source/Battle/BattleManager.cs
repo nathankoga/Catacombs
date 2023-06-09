@@ -88,11 +88,13 @@ public class BattleManager : MonoBehaviour, IManager
     private void WinBattle()
     {
         // play enemy death sound
-        deathSound.Play();
+        // deathSound.Play();
         runStats.playerStats.gainExp(enemyRef.GetComponent<DungeonEnemy>().expGain);
         
         // can't reference StatsGUI from playerStats, so we check for level here
         if (runStats.playerStats.leveledUp){
+            
+            deathSound.Play();  // death sound refactored as a 'level up' sound effect
             statsGUI.levelupGUI();
             runStats.playerStats.leveledUp = false;
         }
