@@ -122,6 +122,9 @@ public class MapTile : MonoBehaviour
             if (gs.runStats.currentFloor == DungeonFloor.FLOOR3)
             {
                 SceneManager.LoadScene("YouWon", LoadSceneMode.Single);
+            } else
+            {
+                player.GetComponent<PlayerLogic>().bossText.BossKilled();
             }
         }
     }
@@ -175,9 +178,16 @@ public class MapTile : MonoBehaviour
 
         // If this is an exit, trigger the next floor.
         // TODO : affirm that the player has deleted the boss
-        if (isExit && player.bossDefeated)
+        if (isExit)
         {
-            gs.RequestManager(gs.stageTransitionManager);
+            if (player.bossDefeated)
+            {
+                gs.RequestManager(gs.stageTransitionManager);
+            } else
+            {
+                player.bossText.MustKillBoss();
+            }
+            
         }
     }
 

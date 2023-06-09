@@ -11,6 +11,7 @@ public class DungeonGUI : MonoBehaviour, IGUIManager
     public PlayerLogic player;
     public TextMeshProUGUI tutorialText;
     public Canvas canvas;
+    public GameObject tutGUI;
 
     
     public void Awake(){
@@ -19,19 +20,18 @@ public class DungeonGUI : MonoBehaviour, IGUIManager
     
     // remove the "wasd to move text"
     public void RemoveTutorialText(){
-        // tutorialText.text = "";
-        DisableGUI();
+        tutGUI.SetActive(false);
     }
     
     
     public void EnableGUI()
     {
-        canvas.enabled = true;
+        return;
     }
 
     public void DisableGUI()
     {
-        canvas.enabled = false;
+        return;
     }
 
     public Canvas GetCanvas()

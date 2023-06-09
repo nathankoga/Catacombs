@@ -28,6 +28,8 @@ public class PlayerLogic : MonoBehaviour
     public StatsGUI statText;
     public AbilitiesGUI abilityText;
 
+    public BossTextHandler bossText;
+
     public bool bossDefeated;
 
     private bool statsGUIEnabled = false;
