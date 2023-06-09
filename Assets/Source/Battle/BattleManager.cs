@@ -160,7 +160,7 @@ public class BattleManager : MonoBehaviour, IManager
         // refill balance bar
         runStats.playerStats.refillBalance();
         runStats.playerStats.loseHP(dmg, false);
-        // player can have another turn as a treat
+        playerTurn = false;
     }
 
     public void Hiss()

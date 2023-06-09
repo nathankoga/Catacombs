@@ -54,7 +54,7 @@ public class GameState : MonoBehaviour
     public void GotoNextFloor()
     {
         // Restore player lives (Can remove this depending on balance)
-        //runStats.playerStats.lives = 9;
+        runStats.playerStats.lives = 9;
 
         DungeonFloor nextFloor = DungeonFloor.FLOOR1;
         if (runStats.currentFloor == DungeonFloor.FLOOR1) nextFloor = DungeonFloor.FLOOR2;
